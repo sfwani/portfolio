@@ -212,7 +212,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     margin-bottom: 0.5rem;
     position: relative;
     display: inline-block;
-    background: linear-gradient(to right, var(--text-main), var(--text-secondary) 70%);
+    background: linear-gradient(to right, var(--text-main), var(--text-main) 40%, var(--text-secondary) 90%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -234,7 +234,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   
   .title {
     font-size: 1.2rem;
-    color: var(--text-secondary);
+    color: #aaaaaa;
     margin-bottom: 0;
     font-family: var(--font-mono);
     letter-spacing: -0.5px;
@@ -707,12 +707,12 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     // 5. End
     
     const nameSequence = [
-      { text: "$sfwani", action: "type", delay: 100 },
+      { text: "$sfwani?", action: "type", delay: 100 },
       { text: "", action: "pause", delay: 1000 },
-      { text: "$sfwani", action: "delete", delay: 50 },
-      { text: "sanaan", action: "type", delay: 100 },
+      { text: "$sfwani?", action: "delete", delay: 50 },
+      { text: "sanaan fayaz wani", action: "type", delay: 100 },
       { text: "", action: "pause", delay: 3000 },
-      { text: "sanaan", action: "delete", delay: 50 }
+      { text: "sanaan fayaz wani", action: "delete", delay: 50 }
     ];
     
     let sequenceIndex = 0;
