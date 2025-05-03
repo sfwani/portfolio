@@ -38,6 +38,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
                 <span class="command">cat work.txt</span>
               </div>
               <div class="output terminal-output-1">Red Team Security Intern @ Amazon</div>
+              <div class="output details terminal-output-4"># Penetration testing & vulnerability research</div>
             </div>
           </div>
           
@@ -153,12 +154,12 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     flex-direction: column;
     justify-content: center;
     flex: 1;
-    padding-top: 2vh;
+    padding-top: 1.5vh;
   }
   
   /* Footer section */
   .footer-section {
-    margin-bottom: 3vh;
+    margin-bottom: 2vh;
   }
   
   /* Scan line effect */
@@ -188,7 +189,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   
   /* Hero Section */
   .hero {
-    margin: 0 0 2.2rem;
+    margin: 0 0 3.5rem;
     text-align: center;
   }
   
@@ -232,7 +233,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   .about {
     text-align: center;
     max-width: 700px;
-    margin: 0 auto 2.8rem;
+    margin: 0 auto 2rem;
     color: var(--text-secondary);
     font-size: 0.95rem;
     line-height: 1.5;
@@ -240,7 +241,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 2rem;
   }
   
   /* Terminal Window */
@@ -256,11 +257,13 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     text-align: left;
     border: 1px solid #333;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(10px);
   }
 
   .terminal-window:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 112, 243, 0.1);
+    border-color: rgba(0, 112, 243, 0.2);
   }
 
   .terminal-header {
@@ -354,18 +357,26 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     padding-left: 15px;
     opacity: 0;
     animation: fadeIn 0.5s ease forwards;
+    text-shadow: 0 0 1px rgba(221, 221, 221, 0.3);
   }
   
   .terminal-output-1 {
-    animation-delay: 2.5s;
+    animation-delay: 2s;
   }
   
   .terminal-output-2 {
-    animation-delay: 4.5s;
+    animation-delay: 4s;
   }
   
   .terminal-output-3 {
-    animation-delay: 5s;
+    animation-delay: 4.5s;
+  }
+  
+  .terminal-output-4 {
+    animation-delay: 2.5s;
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 4px;
   }
   
   @keyframes fadeIn {
@@ -388,6 +399,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     margin-right: auto;
     position: relative;
     margin-top: 0;
+    opacity: 0.85;
   }
   
   .latest-header {
@@ -447,11 +459,11 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   /* Responsive */
   @media (max-width: 768px) {
     .main-content {
-      padding-top: 1.5vh;
+      padding-top: 1vh;
     }
     
     .hero {
-      margin: 0 0 1.8rem;
+      margin: 0 0 2rem;
     }
     
     .name {
@@ -464,8 +476,8 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     
     .about {
       font-size: 0.9rem;
-      margin-bottom: 2.2rem;
-      gap: 1rem;
+      margin-bottom: 1.8rem;
+      gap: 1.6rem;
       padding: 0.3rem;
     }
     
@@ -506,7 +518,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     }
     
     .hero {
-      margin: 0 0 1.2rem;
+      margin: 0 0 1.5rem;
     }
     
     .name {
@@ -518,7 +530,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
       margin-bottom: 1.8rem;
       font-size: 0.8rem;
       line-height: 1.3;
-      gap: 0.8rem;
+      gap: 1.2rem;
       padding: 0.2rem;
     }
     
