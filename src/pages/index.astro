@@ -42,6 +42,11 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
             </div>
           </div>
           
+          <!-- Add cybersecurity rotating text container -->
+          <div class="cyber-text-container">
+            <div class="cyber-text-rotate"></div>
+          </div>
+          
           <div class="terminal-window">
             <div class="terminal-header">
               <div class="terminal-buttons">
@@ -450,6 +455,49 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     display: none; /* Hide the cyber background */
   }
   
+  /* Cyber text rotation */
+  .cyber-text-container {
+    max-width: 700px;
+    margin: 0.7rem auto;
+    text-align: center;
+    height: 30px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cyber-text-rotate {
+    font-family: var(--font-mono);
+    color: var(--accent-blue);
+    text-shadow: 0 0 5px rgba(0, 112, 243, 0.4);
+    letter-spacing: 2px;
+    opacity: 0.7;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: opacity 0.15s ease;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  .char {
+    display: inline-block;
+    width: 0.6em;
+    text-align: center;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
+  
+  .char.highlight {
+    color: #fff;
+    text-shadow: 0 0 8px var(--accent-blue);
+  }
+  
+  .char.dim {
+    opacity: 0.4;
+  }
+  
   /* Animations */
   @keyframes blink {
     0%, 100% { opacity: 1; }
@@ -510,6 +558,15 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
       margin-top: 0;
       margin-bottom: 1.2rem;
     }
+    
+    .cyber-text-container {
+      margin: 0.5rem auto;
+      height: 25px;
+    }
+    
+    .cyber-text-rotate {
+      font-size: 0.8rem;
+    }
   }
   
   @media (max-height: 700px) {
@@ -561,6 +618,15 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     
     .featured {
       margin-top: 0;
+    }
+    
+    .cyber-text-container {
+      margin: 0.4rem auto;
+      height: 20px;
+    }
+    
+    .cyber-text-rotate {
+      font-size: 0.75rem;
     }
   }
 </style>
@@ -644,5 +710,143 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     
     // Start the name typewriter animation
     typewriterName();
+    
+    // Cybersecurity matrix-style animation
+    const cyberTextRotate = document.querySelector('.cyber-text-rotate');
+    const keywords = [
+      'CTF',
+      'SEC',
+      'PWN',
+      'SYS',
+      'XSS',
+      'SSH',
+      'TLS'
+    ];
+    
+    // Create a random string of 0s and 1s
+    function generateBinaryString(length) {
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += Math.random() > 0.5 ? '1' : '0';
+      }
+      return result;
+    }
+    
+    // Set up initial state with binary characters
+    function setupBinaryText() {
+      cyberTextRotate.innerHTML = '';
+      
+      // Create 3 groups of binary
+      for (let i = 0; i < 3; i++) {
+        const groupSpan = document.createElement('span');
+        groupSpan.className = 'binary-group';
+        
+        const binaryStr = generateBinaryString(3);
+        for (let j = 0; j < binaryStr.length; j++) {
+          const charSpan = document.createElement('span');
+          charSpan.className = 'char';
+          charSpan.textContent = binaryStr[j];
+          groupSpan.appendChild(charSpan);
+        }
+        
+        cyberTextRotate.appendChild(groupSpan);
+      }
+    }
+    
+    // Morph binary to keyword
+    function morphToKeyword(keyword) {
+      const groups = cyberTextRotate.querySelectorAll('.binary-group');
+      
+      // For each character in the keyword
+      for (let i = 0; i < keyword.length; i++) {
+        const charSpans = groups[i].querySelectorAll('.char');
+        const targetChar = keyword[i];
+        
+        // For each binary digit in the group
+        charSpans.forEach((span, j) => {
+          // Schedule the change
+          setTimeout(() => {
+            // Randomly decide if this digit should be highlighted
+            if (Math.random() > 0.7) {
+              span.classList.add('highlight');
+              setTimeout(() => span.classList.remove('highlight'), 70);
+            }
+            
+            // Sometimes change to an intermediate random character
+            if (Math.random() > 0.5) {
+              span.textContent = Math.random() > 0.5 ? '1' : '0';
+            }
+          }, j * 60);
+        });
+        
+        // Final change to the target character
+        setTimeout(() => {
+          // Middle character gets the letter
+          charSpans[1].textContent = targetChar;
+          charSpans[1].classList.add('highlight');
+          
+          // Outer characters are dimmed
+          charSpans[0].textContent = '0';
+          charSpans[2].textContent = '1';
+          charSpans[0].classList.add('dim');
+          charSpans[2].classList.add('dim');
+        }, 180);
+      }
+    }
+    
+    // Revert keyword to binary
+    function morphToBinary() {
+      const groups = cyberTextRotate.querySelectorAll('.binary-group');
+      
+      groups.forEach((group) => {
+        const charSpans = group.querySelectorAll('.char');
+        
+        charSpans.forEach((span) => {
+          span.classList.remove('highlight', 'dim');
+          
+          // Animate back to binary
+          setTimeout(() => {
+            if (Math.random() > 0.7) {
+              span.classList.add('highlight');
+              setTimeout(() => span.classList.remove('highlight'), 70);
+            }
+            
+            span.textContent = Math.random() > 0.5 ? '1' : '0';
+          }, Math.random() * 150);
+        });
+      });
+    }
+    
+    // Start the animation cycle
+    function startCyberAnimation() {
+      setupBinaryText();
+      
+      let keywordIndex = 0;
+      
+      function animationCycle() {
+        setTimeout(() => {
+          // Morph to keyword
+          morphToKeyword(keywords[keywordIndex]);
+          
+          // Hold the keyword
+          setTimeout(() => {
+            // Morph back to binary
+            morphToBinary();
+            
+            // Move to next keyword
+            keywordIndex = (keywordIndex + 1) % keywords.length;
+            
+            // Continue the cycle
+            setTimeout(animationCycle, 900);
+          }, 1200);
+        }, 900);
+      }
+      
+      // Start the first cycle
+      animationCycle();
+    }
+    
+    // Start the cyber animation
+    startCyberAnimation();
   });
 </script> 
