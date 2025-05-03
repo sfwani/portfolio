@@ -16,11 +16,8 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   <div class="noise-overlay"></div>
   <div class="container">
     <section class="hero">
-      <h1 class="name">$sanaan<span class="cursor"></span></h1>
+      <h1 class="name"><span id="name-typewriter"></span><span class="cursor"></span></h1>
       <p class="title">Offensive Security Researcher</p>
-      <div class="typewriter-container">
-        <span id="typewriter" class="typewriter"></span>
-      </div>
     </section>
     
     <section class="about">
@@ -65,13 +62,10 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
         const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
         
         return (
-          <div class="post">
-            <div class="post-meta">
-              <span class="date">{formattedDate}</span>
-              <a href={`/blog/${post.slug}`} class="read-more">view <span class="arrow">→</span></a>
-            </div>
-            <h3 class="post-title">{post.data.title}</h3>
-          </div>
+          <a href={`/blog/${post.slug}`} class="post">
+            <span class="date">{formattedDate}</span>
+            <span class="post-title">{post.data.title}</span>
+          </a>
         );
       })}
     </section>
@@ -87,6 +81,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   :root {
     --accent-cyan: #00e6e6;
     --accent-glow: rgba(0, 230, 230, 0.15);
+    --bg-dark: #080808;
     --bg-gradient-dark: rgba(10, 10, 12, 0.97);
     --bg-gradient-light: rgba(20, 20, 25, 0.97);
   }
@@ -173,22 +168,10 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   .title {
     font-size: 1.5rem;
     color: var(--text-secondary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
     font-family: var(--font-mono);
     letter-spacing: -0.5px;
     font-weight: 400;
-  }
-  
-  .typewriter-container {
-    height: 1.5rem;
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.6);
-    font-weight: 300;
-  }
-  
-  .typewriter {
-    border-right: 2px solid transparent;
   }
   
   /* About Section */
@@ -301,85 +284,57 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   /* Featured Post */
   .featured {
     margin-bottom: 4rem;
-    text-align: center;
+    text-align: left;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .featured h2 {
-    font-size: 1.4rem;
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-    letter-spacing: -1px;
-    position: relative;
-    display: inline-block;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    font-family: var(--font-mono);
   }
   
   .accent {
     color: var(--accent-cyan);
     animation: blink 1s step-end infinite;
-    text-shadow: 0 0 5px var(--accent-glow);
   }
   
   .post {
-    border: 1px solid var(--border);
-    padding: 1.2rem 1.5rem;
-    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-    max-width: 500px;
-    margin: 0 auto;
-    text-align: left;
-    background: rgba(20, 20, 25, 0.3);
-    backdrop-filter: blur(5px);
-  }
-  
-  .post:hover {
-    border-color: var(--accent-cyan);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 230, 230, 0.1);
-  }
-  
-  .post-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
+    padding: 0.8rem 0;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+  }
+  
+  .post:hover {
+    background: rgba(0, 230, 230, 0.03);
   }
   
   .date {
     color: var(--accent-cyan);
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    opacity: 0.9;
+    opacity: 0.8;
+    flex-shrink: 0;
+    margin-right: 1.5rem;
   }
   
   .post-title {
-    font-size: 1.1rem;
-    color: var(--text-main);
-    font-weight: 400;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .read-more {
+    font-size: 1rem;
     color: var(--text-secondary);
-    text-decoration: none;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    transition: all 0.3s ease;
-    opacity: 0.8;
+    font-weight: 400;
+    transition: color 0.2s ease;
   }
   
-  .read-more:hover {
-    color: var(--accent-cyan);
-    opacity: 1;
-  }
-  
-  .arrow {
-    display: inline-block;
-    transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-  }
-  
-  .read-more:hover .arrow {
-    transform: translateX(3px);
+  .post:hover .post-title {
+    color: var(--text-main);
   }
   
   /* Background */
@@ -391,7 +346,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     height: 100%;
     z-index: -2;
     pointer-events: none;
-    background: radial-gradient(circle at 50% 30%, var(--bg-gradient-light), var(--bg-gradient-dark) 80%);
+    background: var(--bg-dark);
     overflow: hidden;
   }
   
@@ -425,50 +380,69 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Typewriter effect
-    const typewriter = document.getElementById('typewriter');
-    const phrases = [
-      "Discovering vulnerabilities in web applications",
-      "Solving complex CTF challenges",
-      "Researching security weaknesses",
-      "Building secure systems",
-      "Analyzing malicious code"
+    // Name typewriter effect
+    const nameTypewriter = document.getElementById('name-typewriter');
+    
+    // Sequence: 
+    // 1. Type "$sfwani?"
+    // 2. Pause
+    // 3. Delete "$sfwani?"
+    // 4. Type "$Sanaan Fayaz Wani"
+    // 5. End
+    
+    const nameSequence = [
+      { text: "$sfwani?", action: "type", delay: 100 },
+      { text: "", action: "pause", delay: 1000 },
+      { text: "$sfwani?", action: "delete", delay: 50 },
+      { text: "sanaan wani", action: "type", delay: 100 }
     ];
     
-    let currentPhrase = 0;
-    let currentChar = 0;
-    let isDeleting = false;
-    let isPaused = false;
-    let typingSpeed = 70;
+    let sequenceIndex = 0;
+    let charIndex = 0;
+    let currentText = "";
     
-    function type() {
-      const phrase = phrases[currentPhrase];
+    function typewriterName() {
+      const currentStep = nameSequence[sequenceIndex];
       
-      if (isDeleting) {
-        typewriter.textContent = phrase.substring(0, currentChar - 1);
-        currentChar--;
-        typingSpeed = 30;
-      } else {
-        typewriter.textContent = phrase.substring(0, currentChar + 1);
-        currentChar++;
-        typingSpeed = 70;
+      // Handle each action type
+      if (currentStep.action === "type") {
+        if (charIndex < currentStep.text.length) {
+          currentText += currentStep.text.charAt(charIndex);
+          nameTypewriter.textContent = currentText;
+          charIndex++;
+          setTimeout(typewriterName, currentStep.delay);
+        } else {
+          // Move to next step
+          sequenceIndex++;
+          charIndex = 0;
+          if (sequenceIndex < nameSequence.length) {
+            setTimeout(typewriterName, currentStep.delay * 3);
+          }
+        }
+      } else if (currentStep.action === "delete") {
+        if (currentText.length > 0) {
+          currentText = currentText.slice(0, -1);
+          nameTypewriter.textContent = currentText;
+          setTimeout(typewriterName, currentStep.delay);
+        } else {
+          // Move to next step
+          sequenceIndex++;
+          charIndex = 0;
+          if (sequenceIndex < nameSequence.length) {
+            setTimeout(typewriterName, currentStep.delay);
+          }
+        }
+      } else if (currentStep.action === "pause") {
+        // Just wait and then move to next step
+        sequenceIndex++;
+        if (sequenceIndex < nameSequence.length) {
+          setTimeout(typewriterName, currentStep.delay);
+        }
       }
-      
-      // Pause at end of phrase
-      if (!isDeleting && currentChar === phrase.length) {
-        isPaused = true;
-        isDeleting = true;
-        typingSpeed = 1000; // Pause duration
-      } else if (isDeleting && currentChar === 0) {
-        isDeleting = false;
-        currentPhrase = (currentPhrase + 1) % phrases.length;
-        typingSpeed = 500;
-      }
-      
-      setTimeout(type, typingSpeed);
     }
     
-    type();
+    // Start the name typewriter animation
+    typewriterName();
     
     // Create a more subtle cyber background
     const cyberGrid = document.getElementById('cyber-grid');
@@ -487,7 +461,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
 
     // Binary pattern elements
     const binaryElements = [];
-    const numBinaryElements = 20;
+    const numBinaryElements = 80;
 
     // Initialize binary elements
     function initBinaryElements() {
@@ -496,24 +470,44 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           value: Math.random() < 0.5 ? '0' : '1',
-          opacity: Math.random() * 0.2 + 0.05,
-          fadeSpeed: Math.random() * 0.002 + 0.001,
-          size: Math.floor(Math.random() * 10) + 8
+          opacity: Math.random() * 0.15 + 0.05,
+          fadeSpeed: Math.random() * 0.001 + 0.0005,
+          size: Math.floor(Math.random() * 14) + 8
         });
       }
     }
 
     // Occasionally change binary values
     function updateBinaryElements() {
-      for (const element of binaryElements) {
+      // Add new binary elements occasionally
+      if (Math.random() < 0.05 && binaryElements.length < 100) {
+        binaryElements.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          value: Math.random() < 0.5 ? '0' : '1',
+          opacity: Math.random() * 0.15 + 0.05,
+          fadeSpeed: Math.random() * 0.001 + 0.0005,
+          size: Math.floor(Math.random() * 14) + 8
+        });
+      }
+      
+      for (let i = binaryElements.length - 1; i >= 0; i--) {
+        const element = binaryElements[i];
+        
+        // Occasionally change 0 to 1 or vice versa
         if (Math.random() < 0.01) {
-          element.value = Math.random() < 0.5 ? '0' : '1';
+          element.value = element.value === '0' ? '1' : '0';
         }
         
         // Fade in and out
         element.opacity += element.fadeSpeed;
-        if (element.opacity > 0.3 || element.opacity < 0.05) {
+        if (element.opacity > 0.2 || element.opacity < 0.05) {
           element.fadeSpeed *= -1;
+        }
+        
+        // Remove elements occasionally
+        if (Math.random() < 0.001) {
+          binaryElements.splice(i, 1);
         }
       }
     }
@@ -522,65 +516,13 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Update glow intensity
-      glowIntensity += 0.01 * glowDirection;
-      if (glowIntensity > 1 || glowIntensity < 0) {
-        glowDirection *= -1;
-      }
-      
-      // Draw subtle dot grid
-      for (let x = 0; x < canvas.width; x += dotSpacing) {
-        for (let y = 0; y < canvas.height; y += dotSpacing) {
-          ctx.beginPath();
-          ctx.arc(x, y, dotRadius, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(50, 50, 60, 0.15)';
-          ctx.fill();
-        }
-      }
-      
-      // Draw some horizontal lines
-      ctx.lineWidth = 0.5;
-      for (let y = dotSpacing * 2; y < canvas.height; y += dotSpacing * 6) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(canvas.width, y);
-        ctx.strokeStyle = 'rgba(50, 50, 60, 0.1)';
-        ctx.stroke();
-      }
-      
-      // Draw a few vertical lines
-      for (let x = dotSpacing * 3; x < canvas.width; x += dotSpacing * 8) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, canvas.height);
-        ctx.strokeStyle = 'rgba(50, 50, 60, 0.08)';
-        ctx.stroke();
-      }
-      
-      // Draw binary elements
+      // Draw binary elements (0s and 1s)
       updateBinaryElements();
-      ctx.font = `var(--font-mono)`;
       for (const element of binaryElements) {
         ctx.fillStyle = `rgba(0, 230, 230, ${element.opacity})`;
         ctx.font = `${element.size}px var(--font-mono)`;
         ctx.fillText(element.value, element.x, element.y);
       }
-      
-      // Draw a subtle glow effect at a random position that changes over time
-      const centerX = canvas.width / 2 + Math.sin(Date.now() / 10000) * canvas.width / 4;
-      const centerY = canvas.height / 2 + Math.cos(Date.now() / 8000) * canvas.height / 4;
-      
-      const gradient = ctx.createRadialGradient(
-        centerX, centerY, 0,
-        centerX, centerY, 300
-      );
-      
-      const glowOpacity = 0.03 + 0.02 * Math.sin(Date.now() / 2000);
-      gradient.addColorStop(0, `rgba(0, 230, 230, ${glowOpacity})`);
-      gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       requestAnimationFrame(draw);
     }
