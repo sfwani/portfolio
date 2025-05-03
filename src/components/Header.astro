@@ -3,25 +3,32 @@
 <nav class="main-nav">
   <div class="nav-container">
     <div class="nav-brand">
-      <a href="/" class="brand-link">$sfwani</a>
+      <a href="/" class="brand-link-subtle">$sfwani</a>
     </div>
     <div class="nav-links">
-      <a href="/blog" class="nav-link">./blog</a>
-      <a href="/competitions" class="nav-link">./competitions</a>
-      <a href="/projects" class="nav-link">./projects</a>
-      <a href="/resume" class="nav-link">./resume.txt</a>
+      <a href="/blog" class="nav-link"><span class="prefix">./</span><span class="link-text">blog</span></a>
+      <a href="/competitions" class="nav-link"><span class="prefix">./</span><span class="link-text">competitions</span></a>
+      <a href="/projects" class="nav-link"><span class="prefix">./</span><span class="link-text">projects</span></a>
+      <a href="/resume" class="nav-link"><span class="prefix">./</span><span class="link-text">resume.txt</span></a>
     </div>
   </div>
 </nav>
 
 <style>
+  :root {
+    --accent-blue: #0070f3;
+  }
+
   .main-nav {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 1.5rem;
+    padding: 1.8rem 2rem;
     z-index: 10;
+    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(51, 51, 51, 0.2);
   }
   
   .nav-container {
@@ -34,58 +41,134 @@
   
   .nav-brand {
     font-size: 1.2rem;
+    font-weight: 500;
   }
   
-  .brand-link {
-    color: var(--text-main);
+  .brand-link-default {
     text-decoration: none;
     font-family: var(--font-mono);
     letter-spacing: -0.5px;
-    transition: opacity 0.2s ease;
+    transition: all 0.2s ease;
+    background: linear-gradient(to right, var(--text-main), var(--text-secondary) 70%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.03);
+    position: relative;
   }
   
-  .brand-link:hover {
-    opacity: 0.8;
+  .brand-link-subtle {
+    text-decoration: none;
+    font-family: var(--font-mono);
+    letter-spacing: -0.5px;
+    transition: all 0.2s ease;
+    background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.8));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
+    position: relative;
+  }
+  
+  .brand-link-blue {
+    text-decoration: none;
+    font-family: var(--font-mono);
+    letter-spacing: -0.5px;
+    transition: all 0.2s ease;
+    background: linear-gradient(to right, #ffffff, #0070f3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    text-shadow: 0 0 8px rgba(0, 112, 243, 0.2);
+    position: relative;
+  }
+  
+  /* Clean solid color - No gradient */
+  .brand-link-clean {
+    text-decoration: none;
+    font-family: var(--font-mono);
+    letter-spacing: -0.5px;
+    transition: all 0.2s ease;
+    color: #ffffff;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.1);
+    position: relative;
+  }
+  
+  .brand-link-default:hover,
+  .brand-link-subtle:hover,
+  .brand-link-blue:hover,
+  .brand-link-clean:hover {
+    opacity: 0.9;
   }
   
   .nav-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 2.2rem;
     font-family: var(--font-mono);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
   
   .nav-link {
-    color: var(--text-secondary);
     text-decoration: none;
     transition: all 0.2s ease;
     position: relative;
-    padding-bottom: 2px;
+    padding: 0.4rem 0;
+    opacity: 1;
+  }
+  
+  .nav-link .prefix {
+    color: #0070f3; /* Hard-coded blue color */
+    text-shadow: 0 0 5px rgba(0, 112, 243, 0.4);
+    font-weight: 500;
+  }
+  
+  .nav-link .link-text {
+    color: rgba(255, 255, 255, 0.85); /* Brighter, more visible text color */
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
+    letter-spacing: 0.01em;
+  }
+  
+  .nav-link:hover .link-text {
+    color: #ffffff;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
   }
   
   .nav-link:hover {
-    color: var(--text-main);
+    opacity: 1;
   }
   
-  .nav-link:hover::after {
+  .nav-link::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 0;
     height: 1px;
-    background-color: var(--text-secondary);
-    opacity: 0.5;
+    background-color: #0070f3; /* Hard-coded blue color */
+    transition: width 0.3s ease;
+    opacity: 0;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+    opacity: 0.8;
   }
   
   @media (max-width: 600px) {
+    .main-nav {
+      padding: 1.2rem 1.5rem;
+    }
+    
     .nav-container {
       flex-direction: column;
       gap: 1rem;
     }
     
     .nav-links {
-      gap: 1rem;
+      gap: 1.4rem;
       font-size: 1rem;
     }
   }
