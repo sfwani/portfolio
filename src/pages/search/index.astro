@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+// Get the search query from URL
+const query = Astro.url.searchParams.get('q') || '';
+
+// Function to perform basic search through writeups
+const performSearch = async (searchQuery) => {
+  if (!searchQuery) return [];
+  
+  const searchTerm = searchQuery.toLowerCase();
+  const writeups = await getCollection('writeups');
+  
+  // Filter writeups containing the search term in title or content
+  return writeups
+    .filter(writeup => {
+      const titleMatch = writeup.data.title.toLowerCase().includes(searchTerm);
+      const contentMatch = writeup.body.toLowerCase().includes(searchTerm);
+      return titleMatch || contentMatch;
+    })
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+};
+
+const searchResults = await performSearch(query);
+---
+
+<BaseLayout title={`Search: ${query} | Cybersecurity Portfolio`}>
+  <div class="main-container">
+    <div class="left-column">
+      <div class="profile-info">
+        <span class="username">@sanaan</span>
+      </div>
+
+      <!-- Tree Navigation -->
+      <div class="tree-navigation">
+        <div class="tree-item">
+          <span class="tree-branch">├── </span>
+          <a href="/">home</a>
+        </div>
+        <div class="tree-item">
+          <span class="tree-branch">├── </span>
+          <a href="/writeups">writeups/</a>
+        </div>
+        <div class="tree-item">
+          <span class="tree-branch">│   ├── </span>
+          <a href="/writeups/web-exploits">web-exploits/</a>
+        </div>
+        <div class="tree-item">
+          <span class="tree-branch">│   ├── </span>
+          <a href="/writeups/binary-analysis">binary-analysis/</a>
+        </div>
+        <div class="tree-item">
+          <span class="tree-branch">│   └── </span>
+          <a href="/writeups/ctf-solutions">ctf-solutions/</a>
+        </div>
+        <div class="tree-item">
+          <span class="tree-branch">├── </span>
+          <a href="/competitions">competitions/</a>
+        </div>
+        <div class="tree-item">
+          <span class="tree-branch">├── </span>
+          <a href="/projects">projects/</a>
+        </div>
+        <div class="tree-item">
+          <span class="tree-branch">└── </span>
+          <a href="/resume">resume.txt</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="right-column">
+      <div class="search-container">
+        <form class="search-form" action="/search" method="GET">
+          <input 
+            type="text" 
+            name="q" 
+            class="search-input" 
+            placeholder="Search writeups for techniques, tools, CVEs..." 
+            value={query}
+            aria-label="Search writeups"
+          />
+          <button type="submit" class="search-button">Search</button>
+        </form>
+      </div>
+
+      <h1>Search Results {query ? `for "${query}"` : ''}</h1>
+      
+      {searchResults.length > 0 ? (
+        <ul class="blog-list">
+          {searchResults.map((post) => {
+            const date = post.data.date;
+            const formattedDate = `${date.getFullYear()} · ${String(date.getMonth() + 1).padStart(2, '0')}`;
+            
+            return (
+              <li class="blog-item">
+                <span class="blog-date">{formattedDate}</span>
+                <a href={`/writeups/${post.slug}`} class="blog-link">{post.data.title}</a>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <div class="no-results">
+          {query ? (
+            <p>No writeups found matching "{query}". Try different keywords or browse all writeups.</p>
+          ) : (
+            <p>Enter a search term to find writeups.</p>
+          )}
+          <p><a href="/writeups" class="blog-link">Return to all writeups</a></p>
+        </div>
+      )}
+    </div>
+  </div>
+  
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .main-container {
+    display: flex;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    gap: 3rem;
+  }
+  
+  .left-column {
+    width: 250px;
+    flex-shrink: 0;
+    padding-top: 2rem;
+  }
+  
+  .right-column {
+    flex-grow: 1;
+  }
+  
+  .profile-info {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .username {
+    font-family: var(--font-mono);
+    color: var(--text-main);
+    font-size: 1.2rem;
+  }
+  
+  .tree-navigation {
+    text-align: left;
+    font-family: var(--font-mono);
+    margin-bottom: 2rem;
+  }
+  
+  .tree-item {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: baseline;
+  }
+  
+  .tree-branch {
+    color: var(--text-secondary);
+    margin-right: 0.5rem;
+    font-family: monospace;
+  }
+  
+  .tree-current {
+    color: var(--text-main);
+  }
+  
+  .tree-item a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .tree-item a:hover {
+    color: var(--text-main);
+  }
+  
+  .no-results {
+    text-align: center;
+    margin: 2rem 0;
+    color: var(--text-secondary);
+  }
+  
+  @media (max-width: 768px) {
+    .main-container {
+      flex-direction: column;
+    }
+    
+    .left-column {
+      width: 100%;
+      padding-top: 0;
+    }
+  }
+</style> 

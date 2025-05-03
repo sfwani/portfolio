@@ -1,0 +1,21 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<div class="footer-content">
+  <span class="copyright">&copy; {currentYear} @sanaan</span>
+</div>
+
+<style>
+  .footer-content {
+    padding: 1.5rem 0;
+    color: var(--text-secondary);
+    font-size: var(--font-size-small);
+    opacity: 0.7;
+    text-align: center;
+  }
+  
+  .copyright {
+    font-family: var(--font-mono);
+  }
+</style> 

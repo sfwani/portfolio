@@ -1,0 +1,694 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const writeups = await getCollection('writeups');
+const sortedWriteups = writeups
+  .filter(w => !w.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// Get featured or most recent writeups (max 1 for now)
+const featuredWriteups = sortedWriteups.slice(0, 1);
+---
+
+<BaseLayout title="$sanaan | Cybersecurity Portfolio">
+  <div class="hero">
+    <div class="glitch-container">
+      <h1 class="glitch" data-text="$sanaan">$sanaan</h1>
+    </div>
+    <p class="subtitle">Offensive Security Researcher</p>
+    <div class="typed-container">
+      <span id="typed-output" class="typed-text"></span>
+      <span class="cursor"></span>
+    </div>
+  </div>
+  
+  <div class="content-container">
+    <!-- Interactive Grid -->
+    <div class="grid-container">
+      <div class="grid-item about-panel">
+        <h2 class="panel-title"><span class="accent">./</span>about</h2>
+        <div class="panel-content">
+          <p>
+            Security researcher specializing in vulnerability discovery, penetration testing, and CTF competitions.
+          </p>
+          <p>
+            Passionate about finding security flaws, improving system resilience, and sharing knowledge with the security community.
+          </p>
+          <a href="/resume" class="text-link">View Resume <span class="arrow">→</span></a>
+        </div>
+      </div>
+      
+      <div class="grid-item skills-panel">
+        <h2 class="panel-title"><span class="accent">./</span>skills</h2>
+        <div class="panel-content skill-tags">
+          <span class="skill-tag">Web Exploitation</span>
+          <span class="skill-tag">Binary Analysis</span>
+          <span class="skill-tag">Reverse Engineering</span>
+          <span class="skill-tag">Fuzzing</span>
+          <span class="skill-tag">Mobile Security</span>
+          <span class="skill-tag">CTF</span>
+        </div>
+      </div>
+      
+      <div class="grid-item blog-panel">
+        <h2 class="panel-title"><span class="accent">./</span>latest_post</h2>
+        {featuredWriteups.map((post) => {
+          const date = post.data.date;
+          const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+          
+          return (
+            <div class="panel-content">
+              <div class="post-meta">
+                <span class="post-date">{formattedDate}</span>
+              </div>
+              <h3 class="post-title">{post.data.title}</h3>
+              <p class="post-excerpt">
+                A detailed walkthrough of solving a web security challenge from a recent CTF competition.
+              </p>
+              <a href={`/blog/${post.slug}`} class="text-link">Read post <span class="arrow">→</span></a>
+              <a href="/blog" class="text-link view-all">View all posts <span class="arrow">→</span></a>
+            </div>
+          );
+        })}
+      </div>
+      
+      <div class="grid-item projects-panel">
+        <h2 class="panel-title"><span class="accent">./</span>projects</h2>
+        <div class="panel-content">
+          <div class="project-item">
+            <h3 class="project-title">Security Tool</h3>
+            <p class="project-desc">Custom vulnerability scanner for web applications.</p>
+          </div>
+          <div class="project-item">
+            <h3 class="project-title">CTF Framework</h3>
+            <p class="project-desc">Toolkit for solving common CTF challenges faster.</p>
+          </div>
+          <a href="/projects" class="text-link">Explore projects <span class="arrow">→</span></a>
+        </div>
+      </div>
+      
+      <div class="grid-item connect-panel">
+        <h2 class="panel-title"><span class="accent">./</span>connect</h2>
+        <div class="panel-content connect-links">
+          <a href="https://github.com/yourusername" target="_blank" class="connect-link">
+            <span class="connect-platform">GitHub</span>
+          </a>
+          <a href="https://twitter.com/yourusername" target="_blank" class="connect-link">
+            <span class="connect-platform">Twitter</span>
+          </a>
+          <a href="mailto:email@example.com" class="connect-link">
+            <span class="connect-platform">Email</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Interactive Terminal Box -->
+    <div class="terminal-box">
+      <div class="terminal-header">
+        <span class="terminal-title">terminal</span>
+        <div class="terminal-controls">
+          <span class="control"></span>
+          <span class="control"></span>
+          <span class="control"></span>
+        </div>
+      </div>
+      <div class="terminal-body">
+        <div class="line">
+          <span class="prompt">$</span> <span class="command">explore</span>
+        </div>
+        <div class="output">Usage: explore [page]</div>
+        <div class="output">Available pages: blog, projects, competitions, resume</div>
+        <div class="line">
+          <span class="prompt">$</span> <span id="user-command"></span><span class="blink">█</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="matrix-background" id="matrix-canvas"></div>
+  </div>
+  
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  /* Hero Section */
+  .hero {
+    margin: 8rem auto 5rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .glitch-container {
+    margin-bottom: 1rem;
+  }
+  
+  .glitch {
+    font-size: 3.5rem;
+    font-weight: 500;
+    letter-spacing: -1px;
+    position: relative;
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), 
+                -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+    animation: glitch 2s infinite;
+  }
+  
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 #00ffff;
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+  }
+  
+  .glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 #ff00ff;
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+  }
+  
+  .subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-family: var(--font-mono);
+    letter-spacing: -0.5px;
+  }
+  
+  .typed-container {
+    display: inline-block;
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    min-height: 1.5rem;
+  }
+  
+  .typed-text {
+    color: var(--text-main);
+  }
+  
+  .cursor {
+    display: inline-block;
+    width: 10px;
+    height: 20px;
+    background-color: var(--text-main);
+    margin-left: 5px;
+    animation: blink 1s infinite;
+    vertical-align: middle;
+  }
+  
+  /* Content Container */
+  .content-container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* Interactive Grid */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 4rem 0;
+  }
+  
+  .grid-item {
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(17, 17, 17, 0.8);
+    backdrop-filter: blur(5px);
+  }
+  
+  .grid-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: var(--text-secondary);
+  }
+  
+  .grid-item:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, #00ffff, #ff00ff);
+    opacity: 0.7;
+  }
+  
+  .panel-title {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .accent {
+    color: #00ffff;
+    margin-right: 0.25rem;
+  }
+  
+  .panel-content {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  
+  .panel-content p {
+    margin-bottom: 1rem;
+  }
+  
+  /* Skills Panel */
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+  
+  .skill-tag {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.8rem;
+    transition: all 0.2s ease;
+  }
+  
+  .skill-tag:hover {
+    border-color: #00ffff;
+    color: var(--text-main);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 255, 255, 0.1);
+  }
+  
+  /* Blog Panel */
+  .post-meta {
+    margin-bottom: 0.5rem;
+  }
+  
+  .post-date {
+    font-size: 0.8rem;
+    color: #00ffff;
+    font-family: var(--font-mono);
+  }
+  
+  .post-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    color: var(--text-main);
+    font-weight: 400;
+  }
+  
+  .post-excerpt {
+    margin-bottom: 1rem;
+  }
+  
+  .text-link {
+    display: inline-block;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    margin-top: 0.8rem;
+    font-family: var(--font-mono);
+    border-bottom: 1px solid transparent;
+  }
+  
+  .text-link:hover {
+    border-bottom-color: var(--text-main);
+  }
+  
+  .arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+  
+  .text-link:hover .arrow {
+    transform: translateX(3px);
+  }
+  
+  .view-all {
+    margin-left: 1.5rem;
+    color: var(--text-secondary);
+  }
+  
+  /* Projects Panel */
+  .project-item {
+    margin-bottom: 1.5rem;
+  }
+  
+  .project-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+    font-weight: 400;
+  }
+  
+  .project-desc {
+    font-size: 0.85rem;
+  }
+  
+  /* Connect Panel */
+  .connect-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .connect-link {
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    font-family: var(--font-mono);
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  
+  .connect-link:hover {
+    color: var(--text-main);
+    transform: translateX(5px);
+  }
+  
+  .connect-link::before {
+    content: ">";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #00ffff;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  .connect-link:hover::before {
+    opacity: 1;
+  }
+  
+  /* Terminal Box */
+  .terminal-box {
+    width: 100%;
+    margin: 4rem auto;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 2;
+  }
+  
+  .terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 1rem;
+    background-color: #111111;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .terminal-title {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+  }
+  
+  .terminal-controls {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--border);
+  }
+  
+  .terminal-body {
+    padding: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .line {
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+  
+  .prompt {
+    color: #00ffff;
+    margin-right: 0.5rem;
+  }
+  
+  .command {
+    color: var(--text-main);
+  }
+  
+  .output {
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+  }
+  
+  .blink {
+    animation: blink 1s step-end infinite;
+  }
+  
+  /* Matrix Background */
+  .matrix-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.1;
+  }
+  
+  /* Animations */
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  
+  @keyframes glitch {
+    0% {
+      transform: translate(0);
+    }
+    20% {
+      transform: translate(-2px, 2px);
+    }
+    40% {
+      transform: translate(-2px, -2px);
+    }
+    60% {
+      transform: translate(2px, 2px);
+    }
+    80% {
+      transform: translate(2px, -2px);
+    }
+    100% {
+      transform: translate(0);
+    }
+  }
+  
+  @keyframes glitch-anim-1 {
+    0% {
+      clip-path: inset(20% 0 30% 0);
+    }
+    20% {
+      clip-path: inset(40% 0 30% 0);
+    }
+    40% {
+      clip-path: inset(10% 0 70% 0);
+    }
+    60% {
+      clip-path: inset(80% 0 10% 0);
+    }
+    80% {
+      clip-path: inset(30% 0 60% 0);
+    }
+    100% {
+      clip-path: inset(50% 0 30% 0);
+    }
+  }
+  
+  @keyframes glitch-anim-2 {
+    0% {
+      clip-path: inset(30% 0 20% 0);
+    }
+    20% {
+      clip-path: inset(20% 0 40% 0);
+    }
+    40% {
+      clip-path: inset(70% 0 10% 0);
+    }
+    60% {
+      clip-path: inset(10% 0 80% 0);
+    }
+    80% {
+      clip-path: inset(60% 0 30% 0);
+    }
+    100% {
+      clip-path: inset(30% 0 50% 0);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hero {
+      margin: 5rem auto 3rem;
+    }
+    
+    .glitch {
+      font-size: 2.5rem;
+    }
+    
+    .grid-container {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Typing effect for the subtitle
+  document.addEventListener('DOMContentLoaded', () => {
+    const typedOutput = document.getElementById('typed-output');
+    const phrases = [
+      "Discovering vulnerabilities...",
+      "Securing systems...",
+      "Solving CTF challenges...",
+      "Building secure applications...",
+      "Sharing security knowledge..."
+    ];
+    
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+    
+    function typeText() {
+      const currentPhrase = phrases[phraseIndex];
+      
+      if (isDeleting) {
+        typedOutput.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        typingSpeed = 50;
+      } else {
+        typedOutput.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        typingSpeed = 100;
+      }
+      
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        isDeleting = true;
+        typingSpeed = 1500; // Pause at the end
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        typingSpeed = 500; // Pause before typing the next phrase
+      }
+      
+      setTimeout(typeText, typingSpeed);
+    }
+    
+    typeText();
+    
+    // Interactive terminal
+    const userCommand = document.getElementById('user-command');
+    const validCommands = ['blog', 'projects', 'competitions', 'resume'];
+    let currentCommand = '';
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && currentCommand) {
+        if (validCommands.includes(currentCommand)) {
+          window.location.href = `/${currentCommand}`;
+        } else {
+          const output = document.createElement('div');
+          output.className = 'output';
+          output.textContent = `Command not found: ${currentCommand}`;
+          
+          const commandLine = document.querySelector('.terminal-body .line:last-child');
+          commandLine.insertAdjacentElement('beforebegin', output);
+          
+          // Reset command
+          currentCommand = '';
+          userCommand.textContent = '';
+        }
+      } else if (e.key === 'Backspace') {
+        currentCommand = currentCommand.slice(0, -1);
+        userCommand.textContent = currentCommand;
+      } else if (e.key.length === 1) {
+        currentCommand += e.key;
+        userCommand.textContent = currentCommand;
+      }
+    });
+    
+    // Matrix background
+    const canvas = document.createElement('canvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.getElementById('matrix-canvas').appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d');
+    const chars = "01アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789";
+    
+    const columns = canvas.width / 20;
+    const drops = [];
+    
+    for (let i = 0; i < columns; i++) {
+      drops[i] = Math.floor(Math.random() * canvas.height);
+    }
+    
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = '#0f0';
+      ctx.font = '15px monospace';
+      
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(text, i * 20, drops[i] * 20);
+        
+        if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        
+        drops[i]++;
+      }
+      
+      requestAnimationFrame(drawMatrix);
+    }
+    
+    drawMatrix();
+    
+    // Resize handler for canvas
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  });
+</script> 

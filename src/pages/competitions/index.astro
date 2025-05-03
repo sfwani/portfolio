@@ -1,0 +1,184 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout title="Competitions | Cybersecurity Portfolio">
+  <div class="content-container">
+    <section class="page-header">
+      <h1 class="page-title">CTF Competitions</h1>
+      <p class="page-description">A record of my participation in Capture The Flag (CTF) competitions, including team results, achievements, and learning experiences.</p>
+    </section>
+
+    <section class="competition-section">
+      <h2 class="section-title">Upcoming Competitions</h2>
+      
+      <div class="competition-item">
+        <div class="competition-header">
+          <h3>DEF CON CTF Qualifier 2023</h3>
+          <span class="competition-date">May 2023</span>
+        </div>
+        <p class="competition-desc">
+          Preparing to compete in one of the most prestigious CTF events.
+        </p>
+      </div>
+    </section>
+    
+    <section class="competition-section">
+      <h2 class="section-title">Past Competitions</h2>
+      
+      <div class="competitions-grid">
+        <div class="competition-item">
+          <div class="competition-header">
+            <h3>HackTheBox University CTF 2022</h3>
+            <span class="competition-date">November 2022</span>
+          </div>
+          <p class="competition-desc">
+            Placed in the top 15% of teams competing globally. Focused on web exploitation and reverse engineering challenges.
+          </p>
+          <div class="competition-tags">
+            <span class="competition-tag">web</span>
+            <span class="competition-tag">rev</span>
+            <span class="competition-tag">crypto</span>
+          </div>
+        </div>
+        
+        <div class="competition-item">
+          <div class="competition-header">
+            <h3>picoCTF 2022</h3>
+            <span class="competition-date">March 2022</span>
+          </div>
+          <p class="competition-desc">
+            Solved 32 challenges across multiple categories, focusing primarily on binary exploitation and cryptography.
+          </p>
+          <div class="competition-tags">
+            <span class="competition-tag">pwn</span>
+            <span class="competition-tag">crypto</span>
+            <span class="competition-tag">forensics</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .content-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding-top: 5rem;
+  }
+  
+  .page-header {
+    margin: 3rem 0 4rem;
+    text-align: center;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  
+  .page-description {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .section-title {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .competition-section {
+    margin: 4rem 0;
+  }
+  
+  .competitions-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .competitions-grid {
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    }
+  }
+  
+  .competition-item {
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .competition-item:hover {
+    border-color: var(--text-secondary);
+    transform: translateY(-2px);
+    box-shadow: var(--subtle-shadow);
+  }
+  
+  .competition-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .competition-date {
+    color: var(--text-secondary);
+    font-size: var(--font-size-small);
+    white-space: nowrap;
+    margin-left: auto;
+  }
+  
+  .competition-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+    font-weight: 400;
+    margin-right: 1rem;
+  }
+  
+  .competition-desc {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+  
+  .competition-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .competition-tag {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.5rem;
+    transition: all 0.15s ease;
+  }
+  
+  .competition-item:hover .competition-tag {
+    border-color: var(--border-hover);
+  }
+  
+  @media (max-width: 768px) {
+    .competition-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .competition-date {
+      margin-left: 0;
+      margin-top: 0.5rem;
+    }
+  }
+</style> 

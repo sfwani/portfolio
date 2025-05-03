@@ -1,0 +1,104 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const blog = await getCollection('writeups');
+  return blog.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Format date
+const date = entry.data.date;
+const formattedDate = `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
+---
+
+<BaseLayout title={`${entry.data.title} | Blog`}>
+  <div class="content-container">
+    <div class="path">
+      <a href="/">home</a> / <a href="/blog">blog</a> / <span class="path-current">{entry.slug}</span>
+    </div>
+    
+    <article class="blog-post">
+      <header class="post-header">
+        <h1 class="post-title">{entry.data.title}</h1>
+        <div class="post-meta">
+          <span class="post-date">{formattedDate}</span>
+          
+          {entry.data.tags && entry.data.tags.length > 0 && (
+            <div class="post-tags">
+              {entry.data.tags.map((tag: string) => (
+                <span class="post-tag">{tag}</span>
+              ))}
+            </div>
+          )}
+        </div>
+      </header>
+      
+      <div class="post-content">
+        <Content />
+      </div>
+    </article>
+    
+    <div class="post-navigation">
+      <a href="/blog" class="back-link">← Back to blog</a>
+    </div>
+  </div>
+  
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .writeup-header {
+    margin-bottom: 2rem;
+  }
+
+  .writeup-meta {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .writeup-content {
+    line-height: 1.8;
+  }
+
+  .writeup-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .writeup-content h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .writeup-content p {
+    margin-bottom: 1.5rem;
+  }
+
+  .writeup-content ul, .writeup-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .writeup-content li {
+    margin-bottom: 0.5rem;
+  }
+
+  .writeup-content code {
+    background-color: var(--code-bg);
+    padding: 0.2em 0.4em;
+    border-radius: 0.2em;
+  }
+
+  .writeup-content pre {
+    margin: 1.5rem 0;
+  }
+</style> 

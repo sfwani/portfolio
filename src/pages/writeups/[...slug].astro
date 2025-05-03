@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection, Content } from 'astro:content';
+import { notFound } from 'astro:content';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return [{ params: { slug: undefined } }];
+}
+
+const { slug } = Astro.params;
+const redirect = Astro.redirect(`/blog/${slug}`);
+
+const { writeup } = Astro.props;
+---
+
+<BaseLayout title={`${writeup.data.title} | Cybersecurity Portfolio`}>
+  <Header slot="header" />
+  <main>
+    <article class="writeup">
+      <header class="writeup-header">
+        <h1>{writeup.data.title}</h1>
+        <div class="writeup-meta">
+          <time datetime={writeup.data.date.toISOString()}>
+            {writeup.data.date.toLocaleDateString()}
+          </time>
+          {writeup.data.tags && (
+            <div class="tags-list">
+              {writeup.data.tags.map(tag => (
+                <a href={`/tags/${tag}`} class="tag">{tag}</a>
+              ))}
+            </div>
+          )}
+          {writeup.data.categories && (
+            <div class="categories-list">
+              {writeup.data.categories.map(category => (
+                <a href={`/categories/${category}`} class="category">{category}</a>
+              ))}
+            </div>
+          )}
+        </div>
+      </header>
+
+      <div class="writeup-content">
+        <Content content={writeup} />
+      </div>
+    </article>
+  </main>
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .writeup-header {
+    margin-bottom: 2rem;
+  }
+
+  .writeup-meta {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .writeup-content {
+    line-height: 1.8;
+  }
+
+  .writeup-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .writeup-content h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .writeup-content p {
+    margin-bottom: 1.5rem;
+  }
+
+  .writeup-content ul, .writeup-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .writeup-content li {
+    margin-bottom: 0.5rem;
+  }
+
+  .writeup-content code {
+    background-color: var(--code-bg);
+    padding: 0.2em 0.4em;
+    border-radius: 0.2em;
+  }
+
+  .writeup-content pre {
+    margin: 1.5rem 0;
+  }
+</style> 

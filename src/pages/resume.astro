@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Resume | Cybersecurity Portfolio">  
+  <div class="main-container">
+    <h1>Resume</h1>
+    
+    <section class="resume-section">
+      <h2>Experience</h2>
+      <div class="resume-item">
+        <h3>Security Researcher</h3>
+        <p class="resume-meta">Company Name | 2020 - Present</p>
+        <ul>
+          <li>Conducted vulnerability research and penetration testing</li>
+          <li>Participated in bug bounty programs</li>
+          <li>Developed security tools and scripts</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>Education</h2>
+      <div class="resume-item">
+        <h3>Bachelor of Science in Computer Science</h3>
+        <p class="resume-meta">University Name | 2016 - 2020</p>
+        <p>Specialized in Cybersecurity and Network Security</p>
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3>Technical Skills</h3>
+          <ul>
+            <li>Penetration Testing</li>
+            <li>Vulnerability Research</li>
+            <li>Network Security</li>
+            <li>Web Application Security</li>
+          </ul>
+        </div>
+        <div class="skill-category">
+          <h3>Tools & Technologies</h3>
+          <ul>
+            <li>Burp Suite</li>
+            <li>Metasploit</li>
+            <li>Wireshark</li>
+            <li>Python</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>Certifications</h2>
+      <div class="resume-item">
+        <h3>Certified Ethical Hacker (CEH)</h3>
+        <p class="resume-meta">EC-Council | 2021</p>
+      </div>
+    </section>
+  </div>
+  
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .main-container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding-top: 5rem;
+  }
+  
+  .resume-section {
+    margin: 2rem 0;
+  }
+
+  .resume-item {
+    margin: 1.5rem 0;
+  }
+
+  .resume-meta {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .skill-category ul {
+    list-style: none;
+    margin-top: 0.5rem;
+  }
+
+  .skill-category li {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .skill-category li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--accent-primary);
+  }
+</style> 

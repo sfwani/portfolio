@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export function getStaticPaths() {
+  return [{ params: { path: undefined } }]
+}
+
+const redirect = Astro.redirect('/blog');
+---
+
+<BaseLayout title="Cybersecurity | Portfolio">
+  <Header slot="header" />
+  
+  <div class="main-container">
+    <div class="left-column">
+      <div class="profile-info">
+        <span class="username">$sanaan</span>
+      </div>
+
+      <!-- Tree Navigation -->
+      <div class="tree-navigation">
+        <div class="tree-item">
+          <span class="tree-branch">├── </span>
+          <a href="/">home</a>
+        </div>
+        <div class="tree-item">
+          <span class="tree-branch">├── </span>
+          <a href="/cybersec" class="tree-current">cybersec/</a>
+        </div>
+        <div class="tree-item">
+          <span class="tree-branch">│   └── </span>
+          <a href="/blog">blog/</a>
+        </div>
+        <div class="tree-item">
+          <span class="tree-branch">├── </span>
+          <a href="/projects">projects/</a>
+        </div>
+        <div class="tree-item">
+          <span class="tree-branch">└── </span>
+          <a href="/resume">resume.txt</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="right-column">
+      <h1>Cybersecurity</h1>
+      
+      <section class="content-section">
+        <p>Welcome to my cybersecurity hub. This section contains blog posts, projects, and resources related to my work in offensive security and vulnerability research.</p>
+        
+        <div class="folder-contents">
+          <h2>Directory Contents</h2>
+          <div class="tree-view">
+            <div class="tree-item">
+              <span class="tree-branch">blog/</span>
+            </div>
+            <div class="tree-item">
+              <span class="tree-branch">├── </span>
+              <span class="tree-text">web-exploits/</span>
+            </div>
+            <div class="tree-item">
+              <span class="tree-branch">├── </span>
+              <span class="tree-text">binary-analysis/</span>
+            </div>
+            <div class="tree-item">
+              <span class="tree-branch">└── </span>
+              <span class="tree-text">ctf-solutions/</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .main-container {
+    display: flex;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    gap: 3rem;
+  }
+  
+  .left-column {
+    width: 250px;
+    flex-shrink: 0;
+    padding-top: 2rem;
+  }
+  
+  .right-column {
+    flex-grow: 1;
+  }
+  
+  .profile-info {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .username {
+    font-family: var(--font-mono);
+    color: var(--text-main);
+    font-size: 1.2rem;
+  }
+  
+  .tree-navigation {
+    text-align: left;
+    font-family: var(--font-mono);
+    margin-bottom: 2rem;
+  }
+  
+  .tree-item {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: baseline;
+  }
+  
+  .tree-branch {
+    color: var(--text-secondary);
+    margin-right: 0.5rem;
+    font-family: monospace;
+  }
+  
+  .tree-current {
+    color: var(--text-main);
+  }
+  
+  .tree-item a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .tree-item a:hover {
+    color: var(--text-main);
+  }
+  
+  .content-section {
+    width: 100%;
+    margin: 1rem 0 3rem;
+    text-align: left;
+  }
+  
+  .folder-contents {
+    margin-top: 3rem;
+  }
+  
+  .folder-contents h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  
+  .tree-view {
+    font-family: var(--font-mono);
+    margin: 2rem 0;
+  }
+  
+  @media (max-width: 768px) {
+    .main-container {
+      flex-direction: column;
+    }
+    
+    .left-column {
+      width: 100%;
+      padding-top: 0;
+    }
+  }
+</style> 

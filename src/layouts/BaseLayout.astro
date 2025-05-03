@@ -1,0 +1,86 @@
+---
+import Header from '../components/Header.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Cybersecurity Portfolio" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="/global.css" />
+    <style>
+      .page-transition {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg-main);
+        z-index: 9999;
+        transform: translateY(100%);
+        pointer-events: none;
+      }
+      
+      .page-content {
+        opacity: 0;
+        animation: fadeIn 0.5s ease forwards 0.2s;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-transition"></div>
+    <Header />
+    <main class="page-content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <slot name="footer" />
+    </footer>
+    
+    <script>
+      // Handle page transitions
+      document.addEventListener('DOMContentLoaded', () => {
+        // Add click event listeners to all internal links
+        document.querySelectorAll('a[href^="/"]').forEach(link => {
+          link.addEventListener('click', e => {
+            // Skip if modifier keys are pressed
+            if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+            
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('/') && !href.startsWith('//')) {
+              e.preventDefault();
+              
+              // Animate transition
+              const transition = document.querySelector('.page-transition');
+              transition.style.transition = 'transform 0.3s ease';
+              transition.style.transform = 'translateY(0)';
+              
+              // Navigate after transition completes
+              setTimeout(() => {
+                window.location.href = href;
+              }, 300);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html> 
