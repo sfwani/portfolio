@@ -14,76 +14,83 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
 
 <BaseLayout title="$sanaan | Cybersecurity Portfolio">
   <div class="noise-overlay"></div>
-  <div class="container">
-    <section class="hero">
-      <h1 class="name"><span id="name-typewriter"></span><span class="cursor"></span></h1>
-      <p class="title">Offensive Security Researcher</p>
-    </section>
-    
-    <section class="about">
-      <p>
-        Security researcher specializing in vulnerability discovery, 
-        penetration testing, and CTF competitions.
-      </p>
-    </section>
-    
-    <section class="tags-section">
-      <div class="tags">
-        <span class="tag">Web Exploitation</span>
-        <span class="tag">Binary Analysis</span>
-        <span class="tag">Reverse Engineering</span>
-        <span class="tag">Fuzzing</span>
-        <span class="tag">Mobile Security</span>
-        <span class="tag">CTF</span>
-      </div>
-    </section>
-    
-    <section class="navigation">
-      <div class="nav-items">
-        <a href="/blog" class="nav-item">
-          <span class="prefix">./</span>blog
-        </a>
-        <a href="/projects" class="nav-item">
-          <span class="prefix">./</span>projects
-        </a>
-        <a href="/competitions" class="nav-item">
-          <span class="prefix">./</span>competitions
-        </a>
-        <a href="/resume" class="nav-item">
-          <span class="prefix">./</span>resume.txt
-        </a>
-      </div>
-    </section>
-    
-    <section class="featured">
-      <h2>Latest<span class="accent">_</span></h2>
-      {featuredWriteups.map((post) => {
-        const date = post.data.date;
-        const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-        
-        return (
-          <a href={`/blog/${post.slug}`} class="post">
-            <span class="date">{formattedDate}</span>
-            <span class="post-title">{post.data.title}</span>
-          </a>
-        );
-      })}
-    </section>
-  </div>
-  
   <div id="cyber-grid" class="cyber-background"></div>
-  
-  <Footer slot="footer" />
+  <div class="container">
+    <div class="main-content">
+      <section class="hero">
+        <h1 class="name"><span id="name-typewriter"></span><span class="cursor"></span></h1>
+        <p class="title">Offensive Security Researcher</p>
+      </section>
+      
+      <section class="about">
+        <p>
+          Security researcher specializing in vulnerability discovery, 
+          penetration testing, and CTF competitions.
+        </p>
+      </section>
+      
+      <section class="tags-section">
+        <div class="tags">
+          <span class="tag">Web Exploitation</span>
+          <span class="tag">Binary Analysis</span>
+          <span class="tag">Reverse Engineering</span>
+          <span class="tag">Fuzzing</span>
+          <span class="tag">Mobile Security</span>
+          <span class="tag">CTF</span>
+        </div>
+      </section>
+      
+      <section class="navigation">
+        <div class="nav-items">
+          <a href="/blog" class="nav-item">
+            <span class="prefix">./</span>blog
+          </a>
+          <a href="/projects" class="nav-item">
+            <span class="prefix">./</span>projects
+          </a>
+          <a href="/competitions" class="nav-item">
+            <span class="prefix">./</span>competitions
+          </a>
+          <a href="/resume" class="nav-item">
+            <span class="prefix">./</span>resume.txt
+          </a>
+        </div>
+      </section>
+    </div>
+    
+    <div class="footer-section">
+      <section class="featured">
+        <h2>Latest<span class="accent">_</span></h2>
+        {featuredWriteups.map((post) => {
+          const date = post.data.date;
+          const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+          
+          return (
+            <a href={`/blog/${post.slug}`} class="post">
+              <span class="date">{formattedDate}</span>
+              <span class="post-title">{post.data.title}</span>
+            </a>
+          );
+        })}
+      </section>
+      
+      <Footer slot="footer" />
+    </div>
+  </div>
 </BaseLayout>
 
 <style>
   /* Custom properties */
   :root {
-    --accent-cyan: #00e6e6;
-    --accent-glow: rgba(0, 230, 230, 0.15);
-    --bg-dark: #080808;
-    --bg-gradient-dark: rgba(10, 10, 12, 0.97);
-    --bg-gradient-light: rgba(20, 20, 25, 0.97);
+    --accent-blue: #0070f3;
+    --accent-hover: #3291ff;
+    --accent-glow: rgba(0, 112, 243, 0.15);
+    --bg-dark: #000;
+    --bg-secondary: #111;
+    --text-main: #fff;
+    --text-secondary: #888;
+    --text-accent: #999;
+    --border: #333;
   }
   
   /* Noise overlay */
@@ -106,6 +113,23 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     padding: 0 1.5rem;
     position: relative;
     z-index: 1;
+    height: 100vh; /* Ensure it takes the full viewport height */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Main content */
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    padding-top: 2vh;
+  }
+  
+  /* Footer section */
+  .footer-section {
+    margin-bottom: 2vh;
   }
   
   /* Scan line effect */
@@ -135,15 +159,15 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   
   /* Hero Section */
   .hero {
-    margin: 8rem 0 4rem;
+    margin: 0 0 1.2rem;
     text-align: center;
   }
   
   .name {
-    font-size: 4.2rem;
+    font-size: 3.2rem;
     font-weight: 500;
     letter-spacing: -2px;
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.5rem;
     position: relative;
     display: inline-block;
     background: linear-gradient(to right, var(--text-main), var(--text-secondary) 70%);
@@ -157,16 +181,16 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     display: inline-block;
     width: 3px;
     height: 1em;
-    background-color: var(--accent-cyan);
+    background-color: var(--accent-blue);
     animation: blink 1s step-end infinite;
     position: relative;
     top: 0.15em;
     margin-left: 0.1em;
-    box-shadow: 0 0 8px var(--accent-cyan);
+    box-shadow: 0 0 8px var(--accent-blue);
   }
   
   .title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--text-secondary);
     margin-bottom: 0;
     font-family: var(--font-mono);
@@ -178,29 +202,29 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   .about {
     text-align: center;
     max-width: 600px;
-    margin: 0 auto 4rem;
+    margin: 0 auto 1.2rem;
     color: var(--text-secondary);
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
   
   /* Tags Section */
   .tags-section {
-    margin-bottom: 4rem;
+    margin-bottom: 1.2rem;
   }
   
   .tags {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.8rem;
+    gap: 0.6rem;
   }
   
   .tag {
     color: var(--text-secondary);
     border: 1px solid var(--border);
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
     font-family: var(--font-mono);
     transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
     background: rgba(30, 30, 30, 0.2);
@@ -210,9 +234,9 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   
   .tag:hover {
     color: var(--text-main);
-    border-color: var(--accent-cyan);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 230, 230, 0.1);
+    border-color: var(--accent-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 112, 243, 0.1);
   }
   
   .tag::before {
@@ -222,7 +246,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, transparent, rgba(0, 230, 230, 0.03), transparent);
+    background: linear-gradient(to right, transparent, rgba(0, 112, 243, 0.03), transparent);
     transform: translateX(-100%);
     transition: transform 0.8s ease;
   }
@@ -233,14 +257,15 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   
   /* Navigation */
   .navigation {
-    margin-bottom: 5rem;
+    margin-bottom: 1.2rem;
+    margin-top: 1.2rem;
   }
   
   .nav-items {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.2rem;
   }
   
   .nav-item {
@@ -248,7 +273,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     text-decoration: none;
     font-family: var(--font-mono);
     font-size: 1.1rem;
-    padding: 0.5rem 1rem;
+    padding: 0.3rem 0.6rem;
     border: 1px solid transparent;
     transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
     position: relative;
@@ -265,9 +290,9 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     height: 1px;
     bottom: 0;
     left: 50%;
-    background-color: var(--accent-cyan);
+    background-color: var(--accent-blue);
     transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-    box-shadow: 0 0 5px var(--accent-cyan);
+    box-shadow: 0 0 5px var(--accent-blue);
     opacity: 0.7;
   }
   
@@ -277,13 +302,13 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   }
   
   .prefix {
-    color: var(--accent-cyan);
+    color: var(--accent-blue);
     margin-right: 2px;
   }
   
   /* Featured Post */
   .featured {
-    margin-bottom: 4rem;
+    margin-bottom: 0.6rem;
     text-align: left;
     max-width: 500px;
     margin-left: auto;
@@ -291,15 +316,15 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   }
   
   .featured h2 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
     font-weight: 400;
     letter-spacing: -0.5px;
     font-family: var(--font-mono);
   }
   
   .accent {
-    color: var(--accent-cyan);
+    color: var(--accent-blue);
     animation: blink 1s step-end infinite;
   }
   
@@ -307,18 +332,18 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.8rem 0;
+    padding: 0.4rem 0;
     text-decoration: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     transition: all 0.2s ease;
   }
   
   .post:hover {
-    background: rgba(0, 230, 230, 0.03);
+    background: rgba(0, 112, 243, 0.03);
   }
   
   .date {
-    color: var(--accent-cyan);
+    color: var(--accent-blue);
     font-family: var(--font-mono);
     font-size: 0.8rem;
     opacity: 0.8;
@@ -327,7 +352,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   }
   
   .post-title {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: var(--text-secondary);
     font-weight: 400;
     transition: color 0.2s ease;
@@ -344,7 +369,7 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -2;
+    z-index: -1;
     pointer-events: none;
     background: var(--bg-dark);
     overflow: hidden;
@@ -358,22 +383,82 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
   
   /* Responsive */
   @media (max-width: 768px) {
-    .hero {
-      margin: 5rem 0 3rem;
+    .main-content {
+      padding-top: 1vh;
     }
     
     .name {
-      font-size: 3rem;
+      font-size: 2.8rem;
     }
     
     .title {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
     
-    .nav-items {
-      gap: 1rem;
-      flex-direction: column;
-      align-items: center;
+    .about {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .tags-section {
+      margin-bottom: 1rem;
+    }
+    
+    .featured h2 {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-height: 700px) {
+    .main-content {
+      padding-top: 0;
+    }
+    
+    .name {
+      font-size: 2.3rem;
+      margin-bottom: 0.3rem;
+    }
+    
+    .about {
+      margin-bottom: 0.7rem;
+      font-size: 0.8rem;
+      line-height: 1.3;
+    }
+    
+    .tags-section {
+      margin-bottom: 0.7rem;
+    }
+    
+    .tag {
+      padding: 0.2rem 0.4rem;
+      font-size: 0.7rem;
+    }
+    
+    .navigation {
+      margin-top: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    .nav-item {
+      font-size: 0.9rem;
+      padding: 0.25rem 0.5rem;
+    }
+    
+    .featured h2 {
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+    }
+    
+    .post {
+      padding: 0.25rem 0;
+    }
+    
+    .post-title {
+      font-size: 0.8rem;
+    }
+    
+    .date {
+      font-size: 0.7rem;
     }
   }
 </style>
@@ -446,99 +531,237 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     
     // Create a more subtle cyber background
     const cyberGrid = document.getElementById('cyber-grid');
+    
+    // Create canvas
     const canvas = document.createElement('canvas');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    canvas.id = 'binary-canvas';
     cyberGrid.appendChild(canvas);
 
+    // Make sure canvas is visible but no debugging elements
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+
     const ctx = canvas.getContext('2d');
-
-    // Subtle dots/grid pattern
-    const dotSpacing = 30;
-    const dotRadius = 0.5;
-    let glowIntensity = 0;
-    let glowDirection = 1;
-
-    // Binary pattern elements
+    
+    // Physics constants
+    const GRAVITY = 0.2;
+    const BOUNCE = 0.7;
+    const FRICTION = 0.99;
+    let floorY = canvas.height - 10; // Closer to bottom of viewport
+    let lastSpawnTime = 0;
+    const SPAWN_INTERVAL = 200; // ms
+    
+    // Initialize the array for binary elements
     const binaryElements = [];
-    const numBinaryElements = 80;
 
-    // Initialize binary elements
-    function initBinaryElements() {
-      for (let i = 0; i < numBinaryElements; i++) {
-        binaryElements.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          value: Math.random() < 0.5 ? '0' : '1',
-          opacity: Math.random() * 0.15 + 0.05,
-          fadeSpeed: Math.random() * 0.001 + 0.0005,
-          size: Math.floor(Math.random() * 14) + 8
-        });
+    // Binary elements with physics
+    class BinaryElement {
+      constructor() {
+        // Initial position (spawn from top)
+        this.x = Math.random() * canvas.width;
+        this.y = -20;
+        
+        // Random initial velocity
+        this.vx = (Math.random() - 0.5) * 2;
+        this.vy = Math.random() * 2;
+        
+        // Binary value and appearance
+        this.value = Math.random() < 0.5 ? '0' : '1';
+        this.size = Math.floor(Math.random() * 14) + 8;
+        this.opacity = Math.random() * 0.2 + 0.2;
+        
+        // Physics properties
+        this.mass = this.size / 10;
+        this.settled = false;
+        this.collisionCount = 0;
+        this.rotationAngle = 0;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.1;
+      }
+      
+      update(elements) {
+        // Skip if already settled
+        if (this.settled) return;
+        
+        // Apply gravity if not settled
+        this.vy += GRAVITY;
+        
+        // Apply velocity
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        // Apply rotation for unsettled elements
+        this.rotationAngle += this.rotationSpeed;
+        
+        // Apply friction
+        this.vx *= FRICTION;
+        this.vy *= FRICTION;
+        
+        // Bounce off walls
+        if (this.x < 0 || this.x > canvas.width) {
+          this.vx *= -BOUNCE;
+          this.x = this.x < 0 ? 0 : canvas.width;
+        }
+        
+        // Check if landed on floor
+        if (this.y + this.size/2 > floorY) {
+          this.y = floorY - this.size/2;
+          this.vy *= -BOUNCE;
+          this.collisionCount++;
+          
+          // Settle after a few bounces or if moving very slowly
+          if (this.collisionCount > 3 || Math.abs(this.vy) < 0.3) {
+            this.settled = true;
+            this.vy = 0;
+            this.vx = 0;
+            this.rotationAngle = 0;
+            this.rotationSpeed = 0;
+          }
+        }
+        
+        // Simple collision with other settled elements
+        for (const other of elements) {
+          if (other === this || !other.settled) continue;
+          
+          const dx = this.x - other.x;
+          const dy = this.y - other.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const minDist = (this.size + other.size) / 2;
+          
+          if (distance < minDist) {
+            // Simple collision response
+            this.y = other.y - minDist;
+            this.vy *= -BOUNCE;
+            this.collisionCount++;
+            
+            // Settle if collision count is high
+            if (this.collisionCount > 5) {
+              this.settled = true;
+              this.vy = 0;
+              this.vx = 0;
+              this.rotationAngle = 0;
+              this.rotationSpeed = 0;
+            }
+          }
+        }
+      }
+      
+      draw() {
+        ctx.save();
+        
+        // Set up rotation for unsettled elements
+        if (!this.settled) {
+          ctx.translate(this.x, this.y);
+          ctx.rotate(this.rotationAngle);
+          ctx.translate(-this.x, -this.y);
+        }
+        
+        // Draw the binary character
+        ctx.fillStyle = `rgba(0, 112, 243, ${this.opacity})`;
+        ctx.font = `${this.size}px var(--font-mono)`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(this.value, this.x, this.y);
+        
+        ctx.restore();
       }
     }
 
-    // Occasionally change binary values
+    // Draw the animation
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Update and draw binary elements
+      updateBinaryElements();
+
+      // Draw a subtle floor line at the bottom
+      ctx.beginPath();
+      ctx.moveTo(0, floorY);
+      ctx.lineTo(canvas.width, floorY);
+      ctx.strokeStyle = 'rgba(51, 51, 51, 0.4)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      
+      requestAnimationFrame(draw);
+    }
+    
+    // Initialize binary elements
+    function initBinaryElements() {
+      // Pre-fill with a few elements
+      for (let i = 0; i < 10; i++) {
+        const element = new BinaryElement();
+        element.y = floorY - Math.random() * 50;
+        element.settled = true;
+        binaryElements.push(element);
+      }
+    }
+
+    // Update binary elements
     function updateBinaryElements() {
-      // Add new binary elements occasionally
-      if (Math.random() < 0.05 && binaryElements.length < 100) {
-        binaryElements.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          value: Math.random() < 0.5 ? '0' : '1',
-          opacity: Math.random() * 0.15 + 0.05,
-          fadeSpeed: Math.random() * 0.001 + 0.0005,
-          size: Math.floor(Math.random() * 14) + 8
-        });
+      const now = Date.now();
+      
+      // Add new element based on time interval
+      if (now - lastSpawnTime > SPAWN_INTERVAL && binaryElements.length < 200) {
+        binaryElements.push(new BinaryElement());
+        lastSpawnTime = now;
       }
       
+      // Update each element's physics
+      for (const element of binaryElements) {
+        element.update(binaryElements);
+        element.draw();
+      }
+      
+      // Remove elements that are way off screen (cleanup)
       for (let i = binaryElements.length - 1; i >= 0; i--) {
-        const element = binaryElements[i];
-        
-        // Occasionally change 0 to 1 or vice versa
-        if (Math.random() < 0.01) {
-          element.value = element.value === '0' ? '1' : '0';
-        }
-        
-        // Fade in and out
-        element.opacity += element.fadeSpeed;
-        if (element.opacity > 0.2 || element.opacity < 0.05) {
-          element.fadeSpeed *= -1;
-        }
-        
-        // Remove elements occasionally
-        if (Math.random() < 0.001) {
+        if (binaryElements[i].y > canvas.height + 100) {
           binaryElements.splice(i, 1);
         }
       }
     }
-
-    // Draw the subtle pattern
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw binary elements (0s and 1s)
-      updateBinaryElements();
-      for (const element of binaryElements) {
-        ctx.fillStyle = `rgba(0, 230, 230, ${element.opacity})`;
-        ctx.font = `${element.size}px var(--font-mono)`;
-        ctx.fillText(element.value, element.x, element.y);
-      }
-      
-      requestAnimationFrame(draw);
-    }
-
-    // Initialize and start animation
+    
+    // Start the animation
     initBinaryElements();
     draw();
-
-    // Resize handler
+    
+    // Update canvas when window resizes
     window.addEventListener('resize', () => {
+      // Save the settled elements positions relative to the canvas
+      const settledElements = binaryElements.filter(e => e.settled).map(e => ({
+        x: e.x / canvas.width,
+        y: (e.y - (canvas.height - floorY)) / (floorY - 100),
+        value: e.value,
+        size: e.size,
+        opacity: e.opacity
+      }));
+      
+      // Resize canvas
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       
-      // Reinitialize for new dimensions
+      // Update floor position
+      floorY = canvas.height - 10; // Keep the floor closer to bottom
+      
+      // Clear elements
       binaryElements.length = 0;
-      initBinaryElements();
+      
+      // Restore settled elements with new positions based on new dimensions
+      for (const saved of settledElements) {
+        const element = new BinaryElement();
+        element.x = saved.x * canvas.width;
+        element.y = floorY - saved.y * (floorY - 100);
+        element.value = saved.value;
+        element.size = saved.size;
+        element.opacity = saved.opacity;
+        element.settled = true;
+        element.vx = 0;
+        element.vy = 0;
+        binaryElements.push(element);
+      }
     });
   });
 </script> 
