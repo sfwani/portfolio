@@ -6,18 +6,24 @@ import Footer from '../components/Footer.astro';
 <BaseLayout title="Resume | Cybersecurity Portfolio">  
   <div class="full-width-container">
     <div class="content-container">
-      <h1 class="page-title">$ ./resume</h1>
-      
-      <div class="button-container">
-        <a href="/resume/sanaan_wani_resume.pdf" download class="action-button download-button">
-          <span class="button-icon">↓</span>
-          <span>Download Resume</span>
-        </a>
+      <div class="main-content">
+        <h1 class="page-title">$ ./resume</h1>
         
-        <button id="email-btn" class="action-button email-button">
-          <span class="button-icon">→</span>
-          <span>Send to Email</span>
-        </button>
+        <div class="button-container">
+          <a href="/resume/sanaan_wani_resume.pdf" download class="action-button download-button">
+            <span class="button-icon">↓</span>
+            <span>Download Resume</span>
+          </a>
+          
+          <button id="email-btn" class="action-button email-button">
+            <span class="button-icon">→</span>
+            <span>Send to Email</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <Footer slot="footer" />
       </div>
       
       <div id="email-modal" class="modal">
@@ -43,8 +49,6 @@ import Footer from '../components/Footer.astro';
         </div>
       </div>
     </div>
-    
-    <Footer slot="footer" />
   </div>
 </BaseLayout>
 
@@ -142,8 +146,21 @@ import Footer from '../components/Footer.astro';
     flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .main-content {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center; /* Center vertically */
+    justify-content: center;
+    flex: 1;
+  }
+  
+  /* Footer section - match home page */
+  .footer-section {
+    margin-bottom: 2vh;
+    width: 100%;
   }
   
   .page-title {
