@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { getCollection, Content } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import { notFound } from 'astro:content';
 
 export const prerender = true;
@@ -15,26 +15,27 @@ const { slug } = Astro.params;
 const redirect = Astro.redirect(`/blog/${slug}`);
 
 const { writeup } = Astro.props;
+// Since we're redirecting, we don't need to render content here
 ---
 
-<BaseLayout title={`${writeup.data.title} | Cybersecurity Portfolio`}>
+<BaseLayout title={`${writeup?.data?.title || 'Writeup'} | Cybersecurity Portfolio`}>
   <Header slot="header" />
   <main>
     <article class="writeup">
       <header class="writeup-header">
-        <h1>{writeup.data.title}</h1>
+        <h1>{writeup?.data?.title}</h1>
         <div class="writeup-meta">
-          <time datetime={writeup.data.date.toISOString()}>
-            {writeup.data.date.toLocaleDateString()}
+          <time datetime={writeup?.data?.date?.toISOString()}>
+            {writeup?.data?.date?.toLocaleDateString()}
           </time>
-          {writeup.data.tags && (
+          {writeup?.data?.tags && (
             <div class="tags-list">
               {writeup.data.tags.map(tag => (
                 <a href={`/tags/${tag}`} class="tag">{tag}</a>
               ))}
             </div>
           )}
-          {writeup.data.categories && (
+          {writeup?.data?.categories && (
             <div class="categories-list">
               {writeup.data.categories.map(category => (
                 <a href={`/categories/${category}`} class="category">{category}</a>
@@ -45,7 +46,7 @@ const { writeup } = Astro.props;
       </header>
 
       <div class="writeup-content">
-        <Content content={writeup} />
+        <!-- We'll render the content in the target redirect page instead -->
       </div>
     </article>
   </main>
