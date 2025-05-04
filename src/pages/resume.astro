@@ -4,111 +4,364 @@ import Footer from '../components/Footer.astro';
 ---
 
 <BaseLayout title="Resume | Cybersecurity Portfolio">  
-  <div class="main-container">
-    <h1>Resume</h1>
+  <div class="full-width-container">
+    <div class="content-container">
+      <h1 class="page-title">$ ./resume</h1>
+      
+      <div class="button-container">
+        <a href="/resume/sanaan_wani_resume.pdf" download class="action-button download-button">
+          <span class="button-icon">↓</span>
+          <span>Download Resume</span>
+        </a>
+        
+        <button id="email-btn" class="action-button email-button">
+          <span class="button-icon">→</span>
+          <span>Send to Email</span>
+        </button>
+      </div>
+      
+      <div id="email-modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Send Resume to Email</h2>
+            <button class="close-button" id="close-modal">&times;</button>
+          </div>
+          <form id="email-form" class="email-form">
+            <input 
+              type="email" 
+              id="email-input" 
+              placeholder="your@email.com" 
+              required
+              class="email-input"
+            />
+            <button type="submit" class="modal-submit-button">
+              <span class="send-icon">→</span>
+              <span>Send</span>
+            </button>
+            <div id="form-message" class="form-message"></div>
+          </form>
+        </div>
+      </div>
+    </div>
     
-    <section class="resume-section">
-      <h2>Experience</h2>
-      <div class="resume-item">
-        <h3>Security Researcher</h3>
-        <p class="resume-meta">Company Name | 2020 - Present</p>
-        <ul>
-          <li>Conducted vulnerability research and penetration testing</li>
-          <li>Participated in bug bounty programs</li>
-          <li>Developed security tools and scripts</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="resume-section">
-      <h2>Education</h2>
-      <div class="resume-item">
-        <h3>Bachelor of Science in Computer Science</h3>
-        <p class="resume-meta">University Name | 2016 - 2020</p>
-        <p>Specialized in Cybersecurity and Network Security</p>
-      </div>
-    </section>
-
-    <section class="resume-section">
-      <h2>Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-category">
-          <h3>Technical Skills</h3>
-          <ul>
-            <li>Penetration Testing</li>
-            <li>Vulnerability Research</li>
-            <li>Network Security</li>
-            <li>Web Application Security</li>
-          </ul>
-        </div>
-        <div class="skill-category">
-          <h3>Tools & Technologies</h3>
-          <ul>
-            <li>Burp Suite</li>
-            <li>Metasploit</li>
-            <li>Wireshark</li>
-            <li>Python</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="resume-section">
-      <h2>Certifications</h2>
-      <div class="resume-item">
-        <h3>Certified Ethical Hacker (CEH)</h3>
-        <p class="resume-meta">EC-Council | 2021</p>
-      </div>
-    </section>
+    <Footer slot="footer" />
   </div>
-  
-  <Footer slot="footer" />
 </BaseLayout>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Apply is-homepage class to make the page unscrollable like the landing page
+    document.body.classList.remove('regular-page');
+    document.body.classList.add('is-homepage');
+    
+    const emailModal = document.getElementById('email-modal');
+    const emailBtn = document.getElementById('email-btn');
+    const closeModal = document.getElementById('close-modal');
+    const emailForm = document.getElementById('email-form');
+    const formMessage = document.getElementById('form-message');
+    
+    // Open modal
+    if (emailBtn) {
+      emailBtn.addEventListener('click', () => {
+        emailModal.classList.add('show');
+      });
+    }
+    
+    // Close modal
+    if (closeModal) {
+      closeModal.addEventListener('click', () => {
+        emailModal.classList.remove('show');
+      });
+    }
+    
+    // Close when clicking outside
+    window.addEventListener('click', (e) => {
+      if (e.target === emailModal) {
+        emailModal.classList.remove('show');
+      }
+    });
+    
+    // Form submission
+    if (emailForm) {
+      emailForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const emailInput = document.getElementById('email-input');
+        const email = emailInput.value;
+        
+        // Display sending message
+        formMessage.textContent = 'Sending...';
+        formMessage.className = 'form-message info';
+        
+        // Simulate sending (in a real implementation, this would be an actual API call)
+        setTimeout(() => {
+          // Success message
+          formMessage.textContent = 'Resume sent to your email!';
+          formMessage.className = 'form-message success';
+          emailInput.value = '';
+          
+          // Close modal after success
+          setTimeout(() => {
+            emailModal.classList.remove('show');
+            // Reset message
+            setTimeout(() => {
+              formMessage.textContent = '';
+              formMessage.className = 'form-message';
+            }, 500);
+          }, 2000);
+        }, 1500);
+      });
+    }
+  });
+</script>
+
 <style>
-  .main-container {
+  /* Full width container to make page unscrollable */
+  .full-width-container {
+    width: 100%;
+    background-color: var(--bg-main);
+    min-height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 100%;
+    left: 0;
+    right: 0;
+    overflow-y: hidden;
+  }
+  
+  .content-container {
     width: 100%;
     max-width: var(--max-width);
     margin: 0 auto;
-    padding-top: 5rem;
+    padding: 0 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center vertically */
   }
   
-  .resume-section {
-    margin: 2rem 0;
+  .page-title {
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--text-main);
+    text-align: center;
   }
-
-  .resume-item {
-    margin: 1.5rem 0;
-  }
-
-  .resume-meta {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
-  }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  
+  .button-container {
+    display: flex;
     gap: 2rem;
-    margin-top: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
   }
-
-  .skill-category ul {
-    list-style: none;
+  
+  .action-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: transparent;
+    color: #ffd700; /* Gold color for text */
+    border: 2px solid #ffd700; /* Gold border */
+    padding: 1.2rem 2rem;
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    text-decoration: none;
+    min-width: 220px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .action-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffd700; /* Gold background on hover */
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .action-button:hover {
+    color: var(--bg-main);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+  }
+  
+  .action-button:hover::before {
+    opacity: 1;
+  }
+  
+  .button-icon {
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .download-button:hover .button-icon {
+    transform: translateY(3px);
+  }
+  
+  .email-button:hover .button-icon {
+    transform: translateX(3px);
+  }
+  
+  /* Modal styles */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .modal.show {
+    display: flex;
+    opacity: 1;
+  }
+  
+  .modal-content {
+    background-color: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 450px;
+    overflow: hidden;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal.show .modal-content {
+    transform: scale(1);
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .modal-header h2 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: var(--text-main);
+  }
+  
+  .close-button {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  
+  .close-button:hover {
+    color: #ffd700; /* Gold on hover */
+  }
+  
+  .email-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 1.5rem;
+  }
+  
+  .email-input {
+    padding: 1rem 1.2rem;
+    background-color: var(--bg-main);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    border-radius: 6px;
+    width: 100%;
+    transition: all 0.2s ease;
+  }
+  
+  .email-input:focus {
+    outline: none;
+    border-color: #ffd700; /* Gold border when focused */
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+  }
+  
+  .modal-submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    background-color: #ffd700; /* Gold background */
+    color: var(--bg-main);
+    border: none;
+    padding: 1rem 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+  }
+  
+  .modal-submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+  }
+  
+  .form-message {
+    font-size: 0.9rem;
+    text-align: center;
+    min-height: 1.2rem;
     margin-top: 0.5rem;
   }
-
-  .skill-category li {
-    margin: 0.5rem 0;
-    padding-left: 1.5rem;
-    position: relative;
+  
+  .form-message.success {
+    color: #64dd17;
   }
-
-  .skill-category li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: var(--accent-primary);
+  
+  .form-message.error {
+    color: #ff1744;
+  }
+  
+  .form-message.info {
+    color: var(--text-secondary);
+  }
+  
+  @media (max-width: 768px) {
+    .button-container {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .action-button {
+      width: 100%;
+    }
+    
+    .page-title {
+      font-size: 2rem;
+    }
   }
 </style> 
