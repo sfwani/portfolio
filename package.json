@@ -15,7 +15,7 @@
   "description": "Cybersecurity Portfolio Website",
   "dependencies": {
     "@astrojs/mdx": "^3.0.0",
-    "@astrojs/sitemap": "^4.0.0",
+    "@astrojs/sitemap": "^3.3.1",
     "astro": "^4.0.0"
   }
 }
