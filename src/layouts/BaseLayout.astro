@@ -41,6 +41,10 @@ const isHomepage = Astro.url.pathname === "/" || Astro.url.pathname === "";
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        background-color: var(--bg-main);
       }
       
       @keyframes fadeIn {
@@ -51,33 +55,49 @@ const isHomepage = Astro.url.pathname === "/" || Astro.url.pathname === "";
       /* Homepage specific styles */
       .is-homepage {
         overflow-y: hidden;
+        overflow-x: hidden;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-main);
+        height: 100vh; /* Ensure it's fixed at viewport height */
       }
       
       .is-homepage .page-content {
         height: 100vh;
+        width: 100%;
+        overflow-y: hidden; /* Prevent vertical scrolling */
       }
       
       /* Non-homepage pages should have scrollable content */
       .regular-page .page-content {
         height: auto;
         min-height: 100vh;
+        width: 100%;
       }
       
       /* Non-homepage pages should scroll normally */
       .regular-page {
         overflow-y: auto;
+        overflow-x: hidden;
         height: auto;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-main);
       }
       
       /* Footer should always be at the bottom */
       .site-footer {
         margin-top: auto;
+        width: 100%;
       }
       
       main {
         flex: 1;
         display: flex;
         flex-direction: column;
+        width: 100%;
       }
     </style>
   </head>

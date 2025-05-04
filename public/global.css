@@ -11,6 +11,8 @@
 html {
   scroll-behavior: smooth;
   height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 :root {
@@ -19,7 +21,7 @@ html {
   --text-main: #eaeaea;
   --text-secondary: #a1a1a1;
   --text-dim: #777777;
-  --accent: #eaeaea;
+  --accent: #ffd700;
   --border: #333333;
   --border-hover: #444444;
   --font-mono: 'JetBrains Mono', monospace;
@@ -38,15 +40,19 @@ html, body {
   font-family: var(--font-mono);
   font-size: var(--font-size);
   min-height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   letter-spacing: -0.01em;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 body {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 main {
@@ -75,11 +81,13 @@ main {
   left: 0;
   width: 100%;
   z-index: 20;
-  background: var(--bg-main);
+  background: rgba(17, 17, 17, 0.5);
+  backdrop-filter: blur(5px);
   height: 3.5rem;
   display: flex;
   align-items: center;
   padding: 0 1.5rem;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.2);
 }
 
 .nav-container {
