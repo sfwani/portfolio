@@ -1,0 +1,402 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="Projects | Cybersecurity Portfolio">  
+  <div class="full-width-container">
+    <div class="content-container">
+      <div class="main-content">
+        <h1 class="page-title"><span class="dollar-sign">$</span>./projects</h1>
+        
+        <p class="page-description">
+          A collection of my cybersecurity and software development projects, including tools, research, and open-source contributions.
+        </p>
+        
+        <div class="projects-list">
+          <!-- Project 1: Network Traffic Analyzer -->
+          <div class="project-card">
+            <h3 class="project-title">Network Traffic Analyzer</h3>
+            <div class="project-links">
+              <a href="https://github.com/yourusername/network-analyzer" target="_blank" class="project-link">
+                <span class="link-icon">⌘</span> GitHub
+              </a>
+            </div>
+            <div class="project-content">
+              <p class="project-description">
+                Advanced packet analysis tool built with Python and Scapy. Detects anomalous network behavior and potential security threats in real-time.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Scapy</span>
+                <span class="tech-tag">Network Security</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: Secure File Vault -->
+          <div class="project-card">
+            <h3 class="project-title">Secure File Vault</h3>
+            <div class="project-links">
+              <a href="https://github.com/yourusername/secure-vault" target="_blank" class="project-link">
+                <span class="link-icon">⌘</span> GitHub
+              </a>
+              <a href="https://secure-vault-demo.vercel.app" target="_blank" class="project-link">
+                <span class="link-icon">→</span> Demo
+              </a>
+            </div>
+            <div class="project-content">
+              <p class="project-description">
+                End-to-end encrypted file storage application with zero-knowledge architecture. Implements AES-256 encryption and secure key derivation functions.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">Cryptography</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: IoT Security Toolkit -->
+          <div class="project-card">
+            <h3 class="project-title">IoT Security Toolkit</h3>
+            <div class="project-links">
+              <a href="https://github.com/yourusername/iot-security" target="_blank" class="project-link">
+                <span class="link-icon">⌘</span> GitHub
+              </a>
+            </div>
+            <div class="project-content">
+              <p class="project-description">
+                Firmware analysis and security assessment framework for IoT devices. Detects common vulnerabilities and provides hardening recommendations.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">C++</span>
+                <span class="tech-tag">Assembly</span>
+                <span class="tech-tag">Embedded</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 4: Vulnerability Scanner -->
+          <div class="project-card">
+            <h3 class="project-title">Vulnerability Scanner</h3>
+            <div class="project-links">
+              <a href="https://github.com/yourusername/vuln-scanner" target="_blank" class="project-link">
+                <span class="link-icon">⌘</span> GitHub
+              </a>
+            </div>
+            <div class="project-content">
+              <p class="project-description">
+                Automated web application vulnerability scanner with customizable rules engine. Identifies OWASP Top 10 vulnerabilities and generates detailed reports.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">Go</span>
+                <span class="tech-tag">Web Security</span>
+                <span class="tech-tag">OWASP</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 5: Hardware Security Module -->
+          <div class="project-card">
+            <h3 class="project-title">Hardware Security Module</h3>
+            <div class="project-links">
+              <a href="https://github.com/yourusername/hsm-prototype" target="_blank" class="project-link">
+                <span class="link-icon">⌘</span> GitHub
+              </a>
+            </div>
+            <div class="project-content">
+              <p class="project-description">
+                Custom-built HSM prototype using a Raspberry Pi and secure element. Provides key management and cryptographic operations with physical security controls.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">Raspberry Pi</span>
+                <span class="tech-tag">Hardware</span>
+                <span class="tech-tag">Cryptography</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 6: Security CTF Platform -->
+          <div class="project-card">
+            <h3 class="project-title">Security CTF Platform</h3>
+            <div class="project-links">
+              <a href="https://github.com/yourusername/ctf-platform" target="_blank" class="project-link">
+                <span class="link-icon">⌘</span> GitHub
+              </a>
+              <a href="https://ctf-platform-demo.vercel.app" target="_blank" class="project-link">
+                <span class="link-icon">→</span> Demo
+              </a>
+            </div>
+            <div class="project-content">
+              <p class="project-description">
+                Self-hosted platform for running cybersecurity capture-the-flag competitions. Features Docker-based challenge deployment and real-time scoreboard.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Docker</span>
+                <span class="tech-tag">CTF</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <Footer slot="footer" />
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Remove is-homepage class to allow normal scrolling
+    document.body.classList.remove('is-homepage');
+    document.body.classList.add('regular-page');
+    
+    // Animate project cards on load
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    // Add initial state before animation
+    projectCards.forEach((card, index) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+    });
+    
+    // Animate cards with delay
+    setTimeout(() => {
+      projectCards.forEach((card, index) => {
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 100); // Staggered delay
+      });
+    }, 300); // Initial delay
+    
+    // Add hover animations
+    projectCards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.classList.add('card-hover');
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.classList.remove('card-hover');
+      });
+    });
+  });
+</script>
+
+<style>
+  /* Full width container with normal scrolling */
+  .full-width-container {
+    width: 100%;
+    background-color: #0d0d0d;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 0;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .content-container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .main-content {
+    padding-top: 6rem;
+    flex: 1;
+  }
+  
+  /* Footer section */
+  .footer-section {
+    margin-top: auto;
+    margin-bottom: 2vh;
+    width: 100%;
+  }
+  
+  .page-title {
+    font-size: 3rem;
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .dollar-sign {
+    color: #7d7d7d;
+    margin-right: 0.2rem;
+  }
+  
+  .page-description {
+    text-align: center;
+    color: #aaa;
+    max-width: 800px;
+    margin: 0 auto 5rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  /* Projects list */
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin: 0 auto;
+    max-width: 650px;
+    padding-bottom: 4rem;
+  }
+  
+  /* Project card */
+  .project-card {
+    background: #111;
+    border-radius: 0;
+    border: 1px solid #222;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+    opacity: 0; /* Start invisible for animation */
+    transform: translateY(20px); /* Start below for animation */
+  }
+  
+  .project-card.card-hover {
+    transform: translateY(-3px) !important;
+    border-color: #333;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Project title */
+  .project-title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin: 0;
+    color: #fff;
+    padding: 0.9rem 1.2rem;
+    text-align: center;
+    letter-spacing: -0.5px;
+  }
+  
+  .project-links {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    padding: 0 1.2rem 0.8rem;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  
+  .project-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: #aaa;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+  }
+  
+  .project-link:hover {
+    color: var(--accent-gold);
+    transform: translateY(-2px);
+  }
+  
+  .link-icon {
+    opacity: 0.7;
+  }
+  
+  /* Project content */
+  .project-content {
+    padding: 1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .project-description {
+    color: #aaa;
+    margin: 0;
+    line-height: 1.5;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  /* Tech stack */
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  .tech-tag {
+    background-color: #1a1a1a;
+    color: #ccc;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    border: 1px solid #2a2a2a;
+    transition: all 0.3s ease;
+  }
+  
+  .card-hover .tech-tag {
+    background-color: #1d1d1d;
+    border-color: #333;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 2.5rem;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .page-description {
+      font-size: 0.9rem;
+      margin-bottom: 4rem;
+      max-width: 90%;
+    }
+    
+    .content-container {
+      padding: 0 1.5rem;
+    }
+    
+    .project-title {
+      font-size: 1.3rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .page-title {
+      font-size: 2rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .page-description {
+      font-size: 0.85rem;
+      margin-bottom: 3rem;
+    }
+    
+    .project-title {
+      font-size: 1.2rem;
+    }
+    
+    .project-content {
+      padding: 0.8rem 1rem;
+    }
+  }
+</style> 

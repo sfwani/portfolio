@@ -7,7 +7,7 @@ import Footer from '../components/Footer.astro';
   <div class="full-width-container">
     <div class="content-container">
       <div class="main-content">
-        <h1 class="page-title">$ ./resume</h1>
+        <h1 class="page-title"><span class="dollar-sign">$</span>./resume</h1>
         
         <div class="button-container">
           <a href="/resume/sanaan_wani_resume.pdf" download class="action-button download-button">
@@ -164,12 +164,18 @@ import Footer from '../components/Footer.astro';
   }
   
   .page-title {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
+    margin-top: 6rem;
     margin-bottom: 4rem;
     font-family: var(--font-mono);
     font-weight: 500;
     color: var(--text-main);
     text-align: center;
+  }
+  
+  .dollar-sign {
+    color: #7d7d7d;
+    margin-right: 0.2rem;
   }
   
   .button-container {
@@ -237,7 +243,7 @@ import Footer from '../components/Footer.astro';
     transform: translateX(3px);
   }
   
-  /* Modal styles */
+  /* Modal styling */
   .modal {
     display: none;
     position: fixed;
@@ -245,11 +251,13 @@ import Footer from '../components/Footer.astro';
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 1000;
+    display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
+    pointer-events: none;
     transition: opacity 0.3s ease;
   }
   
@@ -367,18 +375,50 @@ import Footer from '../components/Footer.astro';
     color: var(--text-secondary);
   }
   
+  /* Responsive styles */
   @media (max-width: 768px) {
+    .page-title {
+      font-size: 2.8rem;
+      margin-top: 4rem;
+      margin-bottom: 3rem;
+    }
+    
+    .action-button {
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      min-width: 200px;
+    }
+    
+    .button-container {
+      gap: 1.5rem;
+    }
+    
+    .modal-content {
+      width: 90%;
+      max-width: 400px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .page-title {
+      font-size: 2.2rem;
+      margin-top: 3rem;
+      margin-bottom: 2.5rem;
+    }
+    
     .button-container {
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
     }
     
     .action-button {
       width: 100%;
+      min-width: unset;
+      padding: 0.9rem 1.5rem;
     }
     
-    .page-title {
-      font-size: 2rem;
+    .modal-content {
+      padding: 1.5rem;
     }
   }
 </style> 
