@@ -16,16 +16,16 @@ import Footer from '../../components/Footer.astro';
       <div class="timeline-section future">
         <h2 class="section-title">upcoming</h2>
         
-        <div class="timeline-item" data-year="2023">
+        <div class="timeline-item" data-year="2023" data-month="May">
           <div class="timeline-marker"></div>
           <div class="competition-item">
             <div class="competition-header">
               <h3>DEF CON CTF Qualifier 2023</h3>
-              <span class="competition-date">May 2023</span>
+              <span class="achievement upcoming">Preparing</span>
             </div>
-            <p class="competition-desc">
-              Preparing to compete in one of the most prestigious CTF events.
-            </p>
+            <div class="competition-desc">
+              <span>Preparing to compete in one of the most prestigious CTF events.</span>
+            </div>
           </div>
         </div>
       </div>
@@ -33,16 +33,16 @@ import Footer from '../../components/Footer.astro';
       <div class="timeline-section past">
         <h2 class="section-title">past</h2>
         
-        <div class="timeline-item" data-year="2022">
+        <div class="timeline-item" data-year="2022" data-month="Nov">
           <div class="timeline-marker"></div>
           <div class="competition-item">
             <div class="competition-header">
               <h3>HackTheBox University CTF 2022</h3>
-              <span class="competition-date">November 2022</span>
+              <span class="achievement">Top 15%</span>
             </div>
-            <p class="competition-desc">
-              Placed in the top 15% of teams competing globally. Focused on web exploitation and reverse engineering challenges.
-            </p>
+            <div class="competition-desc">
+              <span>Placed in the top 15% of teams competing globally. Focused on web exploitation and reverse engineering challenges.</span>
+            </div>
             <div class="competition-tags">
               <span class="competition-tag">web</span>
               <span class="competition-tag">rev</span>
@@ -51,16 +51,16 @@ import Footer from '../../components/Footer.astro';
           </div>
         </div>
         
-        <div class="timeline-item" data-year="2022">
+        <div class="timeline-item" data-year="2022" data-month="Mar">
           <div class="timeline-marker"></div>
           <div class="competition-item">
             <div class="competition-header">
               <h3>picoCTF 2022</h3>
-              <span class="competition-date">March 2022</span>
+              <span class="achievement">32 Challenges</span>
             </div>
-            <p class="competition-desc">
-              Solved 32 challenges across multiple categories, focusing primarily on binary exploitation and cryptography.
-            </p>
+            <div class="competition-desc">
+              <span>Solved 32 challenges across multiple categories, focusing primarily on binary exploitation and cryptography.</span>
+            </div>
             <div class="competition-tags">
               <span class="competition-tag">pwn</span>
               <span class="competition-tag">crypto</span>
@@ -69,21 +69,76 @@ import Footer from '../../components/Footer.astro';
           </div>
         </div>
         
-        <div class="timeline-item" data-year="2021">
+        <div class="timeline-item" data-year="2021" data-month="Sep">
           <div class="timeline-marker"></div>
           <div class="year-label">2021</div>
           <div class="competition-item">
             <div class="competition-header">
               <h3>CSAW CTF Qualification Round</h3>
-              <span class="competition-date">September 2021</span>
+              <span class="achievement">Team of 4</span>
             </div>
-            <p class="competition-desc">
-              Participated with a team of four security enthusiasts, focusing on reverse engineering and cryptography challenges.
-            </p>
+            <div class="competition-desc">
+              <span>Participated with a team of four security enthusiasts, focusing on reverse engineering and cryptography challenges.</span>
+            </div>
             <div class="competition-tags">
               <span class="competition-tag">rev</span>
               <span class="competition-tag">crypto</span>
               <span class="competition-tag">misc</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="timeline-item" data-year="2021" data-month="Apr">
+          <div class="timeline-marker"></div>
+          <div class="competition-item">
+            <div class="competition-header">
+              <h3>University Security Challenge</h3>
+              <span class="achievement gold">1st Place</span>
+            </div>
+            <div class="competition-desc">
+              <span>Won first place among 24 university teams. Demonstrated skills in web exploitation, binary analysis, and network security.</span>
+            </div>
+            <div class="competition-tags">
+              <span class="competition-tag">web</span>
+              <span class="competition-tag">pwn</span>
+              <span class="competition-tag">network</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-year="2020" data-month="Nov">
+          <div class="timeline-marker"></div>
+          <div class="year-label">2020</div>
+          <div class="competition-item">
+            <div class="competition-header">
+              <h3>Regional Cyber Defense Cup</h3>
+              <span class="achievement silver">2nd Place</span>
+            </div>
+            <div class="competition-desc">
+              <span>Secured second place in a defensive competition focused on hardening systems and responding to active threats.</span>
+            </div>
+            <div class="competition-tags">
+              <span class="competition-tag">defense</span>
+              <span class="competition-tag">blue-team</span>
+              <span class="competition-tag">incident-response</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="timeline-item" data-year="2020" data-month="Jul">
+          <div class="timeline-marker"></div>
+          <div class="competition-item">
+            <div class="competition-header">
+              <h3>Summer Hacking League</h3>
+              <span class="achievement bronze">3rd Place</span>
+            </div>
+            <div class="competition-desc">
+              <span>Earned third place in a competitive jeopardy-style CTF with over 120 participants. Specialized in crypto and forensics challenges.</span>
+            </div>
+            <div class="competition-tags">
+              <span class="competition-tag">crypto</span>
+              <span class="competition-tag">forensics</span>
+              <span class="competition-tag">reversing</span>
             </div>
           </div>
         </div>
@@ -282,7 +337,7 @@ import Footer from '../../components/Footer.astro';
     border-radius: 50%;
     background-color: var(--text-main);
     border: 2px solid var(--background);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease;
     box-shadow: 0 0 0 rgba(var(--text-main-rgb, 220, 220, 220), 0.4), 0 0 8px rgba(255, 255, 255, 0.2);
     animation: pulse 2s infinite;
     z-index: 4;
@@ -307,6 +362,7 @@ import Footer from '../../components/Footer.astro';
   
   .timeline-item:hover .timeline-marker {
     animation: pulse 1s infinite;
+    background-color: #ffffff;
   }
   
   .timeline-item::before {
@@ -317,11 +373,26 @@ import Footer from '../../components/Footer.astro';
     font-size: 0.9rem;
     font-weight: bold;
     color: rgba(255, 255, 255, 0.7);
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    opacity: 0.9;
     transform: translateX(-150%);
     z-index: 5;
     text-align: right;
     min-width: 40px;
+  }
+  
+  .timeline-item::after {
+    content: attr(data-month);
+    position: absolute;
+    left: 0;
+    top: 40px;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    opacity: 0.9;
+    transform: translateX(-150%);
+    z-index: 5;
+    text-align: right;
+    min-width: 40px;
+    font-family: monospace;
   }
   
   .timeline-item:hover::before {
@@ -329,10 +400,15 @@ import Footer from '../../components/Footer.astro';
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
   }
   
+  .timeline-item:hover::after {
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  }
+  
   .competition-item {
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 1.5rem;
+    padding: 1.8rem;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     background-color: var(--background);
     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.05));
@@ -383,52 +459,69 @@ import Footer from '../../components/Footer.astro';
   .competition-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
     flex-wrap: wrap;
+    gap: 0.8rem;
   }
   
   .competition-date {
-    color: var(--text-secondary);
-    font-size: var(--font-size-small);
-    white-space: nowrap;
-    margin-left: auto;
-    background-color: rgba(0, 0, 0, 0.2);
-    padding: 2px 8px;
-    border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: none;
   }
   
   .competition-item h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    margin-bottom: 0;
     color: var(--text-main);
     font-weight: 500;
-    margin-right: 1rem;
     letter-spacing: 0.01em;
     transition: text-shadow 0.3s ease;
+    margin-right: 1rem;
   }
   
   .competition-item:hover h3 {
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+    color: #ffffff;
   }
   
   .competition-desc {
     color: var(--text-secondary);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  
+  .achievement {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.05));
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: rgba(255, 215, 0, 0.9);
+    padding: 5px 12px;
+    border-radius: 4px;
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-align: center;
+    min-width: 110px;
   }
   
   .competition-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.6rem;
+    justify-content: center;
   }
   
   .competition-tag {
     font-size: 0.7rem;
     color: var(--text-secondary);
     border: 1px solid var(--border);
-    padding: 0.2rem 0.5rem;
+    padding: 0.25rem 0.6rem;
     border-radius: 20px;
     transition: all 0.15s ease;
   }
@@ -541,11 +634,19 @@ import Footer from '../../components/Footer.astro';
     }
     
     .timeline-item::before {
-      left: 13px;
-      top: -15px;
       transform: none;
-      color: rgba(255, 255, 255, 0.8);
+      left: 13px;
+      top: -18px;
       font-size: 0.8rem;
+      opacity: 0.7;
+    }
+    
+    .timeline-item::after {
+      transform: none;
+      left: 13px;
+      top: -5px;
+      font-size: 0.7rem;
+      opacity: 0.7;
     }
     
     .year-label {
@@ -555,11 +656,73 @@ import Footer from '../../components/Footer.astro';
     .competition-header {
       flex-direction: column;
       align-items: flex-start;
+      gap: 0.8rem;
     }
     
-    .competition-date {
-      margin-left: 0;
-      margin-top: 0.5rem;
+    .competition-item h3 {
+      margin-right: 0;
+      width: 100%;
     }
+    
+    .achievement {
+      align-self: flex-start;
+    }
+  }
+  
+  .achievement.upcoming {
+    background: linear-gradient(135deg, rgba(100, 149, 237, 0.2), rgba(100, 149, 237, 0.05));
+    border: 1px solid rgba(100, 149, 237, 0.3);
+    color: rgba(100, 149, 237, 0.9);
+  }
+  
+  .competition-item:hover .achievement.upcoming {
+    background: linear-gradient(135deg, rgba(100, 149, 237, 0.25), rgba(100, 149, 237, 0.1));
+    border-color: rgba(100, 149, 237, 0.4);
+    color: rgba(100, 149, 237, 1);
+    box-shadow: 0 2px 8px rgba(100, 149, 237, 0.15);
+  }
+  
+  .achievement.gold {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.1));
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    color: rgba(255, 215, 0, 1);
+    font-weight: 700;
+  }
+  
+  .achievement.silver {
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.3), rgba(192, 192, 192, 0.1));
+    border: 1px solid rgba(192, 192, 192, 0.4);
+    color: rgba(192, 192, 192, 1);
+    font-weight: 700;
+  }
+  
+  .achievement.bronze {
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.3), rgba(205, 127, 50, 0.1));
+    border: 1px solid rgba(205, 127, 50, 0.4);
+    color: rgba(205, 127, 50, 1);
+    font-weight: 700;
+  }
+  
+  .competition-item:hover .achievement.gold {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.35), rgba(255, 215, 0, 0.15));
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.25);
+  }
+  
+  .competition-item:hover .achievement.silver {
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.35), rgba(192, 192, 192, 0.15));
+    box-shadow: 0 2px 10px rgba(192, 192, 192, 0.25);
+  }
+  
+  .competition-item:hover .achievement.bronze {
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.35), rgba(205, 127, 50, 0.15));
+    box-shadow: 0 2px 10px rgba(205, 127, 50, 0.25);
+  }
+  
+  .competition-item:hover .achievement {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 215, 0, 0.1));
+    border-color: rgba(255, 215, 0, 0.4);
+    color: rgba(255, 215, 0, 1);
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.15);
+    transform: translateY(-1px);
   }
 </style> 
