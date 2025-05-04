@@ -349,21 +349,6 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
-    border-right: 2px solid transparent;
-    animation: typing 2s steps(15, end) 1, blink-caret 0.75s step-end infinite;
-  }
-  
-  .terminal-window:first-child .command {
-    animation-delay: 0.5s;
-  }
-  
-  .terminal-window:last-child .command {
-    animation-delay: 2.5s;
-  }
-  
-  @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
   }
   
   @keyframes blink-caret {
@@ -375,24 +360,21 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     color: #cccccc;
     padding-left: 15px;
     opacity: 0;
-    animation: fadeIn 0.5s ease forwards;
+    transform: translateY(5px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
     text-shadow: 0 0 1px rgba(204, 204, 204, 0.3);
   }
   
   .terminal-output-1 {
-    animation-delay: 2s;
   }
   
   .terminal-output-2 {
-    animation-delay: 4s;
   }
   
   .terminal-output-3 {
-    animation-delay: 4.5s;
   }
   
   .terminal-output-4 {
-    animation-delay: 2.5s;
     font-size: 0.85rem;
     color: #999;
     margin-top: 4px;
@@ -780,6 +762,64 @@ const featuredWriteups = sortedWriteups.slice(0, 1);
     
     // Start the name typewriter animation
     typewriterName();
+    
+    // Terminal command animations - use the same typewriter style as the name
+    const terminalCommands = document.querySelectorAll('.command');
+    
+    // Type each command one character at a time
+    function typeCommand(commandElement, text, delay) {
+      let index = 0;
+      let currentText = "";
+      
+      // Add a blinking cursor
+      commandElement.style.borderRight = "2px solid var(--accent-blue)";
+      
+      function type() {
+        if (index < text.length) {
+          currentText += text.charAt(index);
+          commandElement.textContent = currentText;
+          index++;
+          setTimeout(type, delay);
+        } else {
+          // Animation complete, keep the cursor visible and blinking
+          // Unlike the header, we won't clear the text - just keep it displayed
+          
+          // Add blinking cursor animation
+          setInterval(() => {
+            if (commandElement.style.borderRightColor === "rgb(0, 112, 243)") { // var(--accent-blue)
+              commandElement.style.borderRightColor = "transparent";
+            } else {
+              commandElement.style.borderRightColor = "rgb(0, 112, 243)"; // var(--accent-blue)
+            }
+          }, 500); // Blink every 500ms
+          
+          // Find and show corresponding outputs once typing is complete
+          const terminalContent = commandElement.closest('.terminal-content');
+          if (terminalContent) {
+            const outputs = terminalContent.querySelectorAll('.output');
+            outputs.forEach((output, i) => {
+              setTimeout(() => {
+                output.style.opacity = '1';
+                output.style.transform = 'translateY(0)';
+              }, 500 + (i * 500)); // Add delay between outputs
+            });
+          }
+        }
+      }
+      
+      type();
+    }
+    
+    // Start the typing animation for terminal commands with different delays
+    terminalCommands.forEach((command, index) => {
+      const originalText = command.textContent;
+      command.textContent = '';
+      
+      const delay = 100; // Same as the name typing speed
+      setTimeout(() => {
+        typeCommand(command, originalText, delay);
+      }, 1000); // Both commands start at the same time
+    });
     
     // Cybersecurity matrix-style animation
     const cyberTextRotate = document.querySelector('.cyber-text-rotate');
